@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 import { Image } from "antd";
 
 const navigation = [
-  { name: "Book", href: "/", current: false },
-  { name: "About", href: "/", current: false },
-  { name: "Register", href: "/", current: false },
-  { name: "Login", href: "/", current: false },
+  { name: "Book", href: "/booking", current: false },
+  { name: "About", href: "/about", current: false },
+  { name: "Register", href: "/register", current: false },
+  { name: "Login", href: "/login", current: false },
 ];
 
 function classNames(...classes: string[]) {
@@ -37,7 +37,7 @@ const Header = () => {
                       href={item.href}
                       className={classNames(
                         "text-light-blue hover:text-currentText",
-                        "rounded-lg px-3 py-2 text-lg font-mediun"
+                        "rounded-lg px-3 py-2 text-xl font-medium"
                       )}
                       aria-current={item.current ? "page" : undefined}
                     >
