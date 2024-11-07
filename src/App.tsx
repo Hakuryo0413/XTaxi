@@ -1,11 +1,16 @@
+import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import React from "react";
-import "./App.css";
+import UserRouter from "./routes/user/UserRouter";
 
 function App() {
   return (
-    <>
-      <div className="text-3xl font-bold text-yellow-500">XTAXI</div>
-    </>
+    <div className="font-priego text-sm md:text-md bg-background min-h-screen">
+      <Router>
+        <Routes>
+          <Route path="/*" element={<UserRouter />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 
