@@ -1,0 +1,54 @@
+.about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 20px;
+    background-color: bg-primary;
+}
+
+.about-section {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    justify-content: space-between; /* Căn các phần tử đối xứng */
+    flex-direction: row; /* Các phần tử xếp ngang */
+}
+
+.about-image,
+.about-article {
+    flex: 1; /* Chia đều không gian giữa ảnh và bài viết */
+    font-size: 1rem;  
+}
+
+.about-image {
+    max-width: 100px; /* Hạn chế chiều rộng tối đa của ảnh */
+    display: flex;
+}
+
+.about-image img {
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.about-article {
+    color: aliceblue;
+}
+
+.about-article h2 {
+    color: yellow;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .about-section {
+        flex-direction: column; /* Chuyển sang bố cục dọc trên màn hình nhỏ */
+        text-align: center;
+    }
+
+    .about-image {
+        max-width: auto; /* Cho phép hình ảnh chiếm toàn bộ chiều rộng trên màn hình nhỏ */
+    }
+}
