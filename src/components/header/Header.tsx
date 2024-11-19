@@ -50,7 +50,7 @@ const Header = () => {
               <div className="absolute right-0 flex lg:relative lg:block">
                 <div className="flex lg:hidden">
                   {/* Nút mở navigation đối với điện thoại*/}
-                  <Disclosure.Button className="flex float-right items-center rounded-lg p-2 text-black hover:bg-white hover:bg-opacity-30 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <Disclosure.Button className="flex float-right items-center rounded-lg p-2 text-white hover:bg-white hover:bg-opacity-30 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
                       <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
@@ -89,13 +89,6 @@ const Header = () => {
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-background">
                       <Menu.Item>
-                        <text
-                          className={classNames(
-                            "block px-4 py-2 text-sm hover:opacity-50"
-                          )}
-                        ></text>
-                      </Menu.Item>
-                      <Menu.Item>
                         <Link to={"/"}>
                           <button
                             className={classNames(
@@ -103,7 +96,7 @@ const Header = () => {
                             )}
                             onClick={() => {}}
                           >
-                            Đăng xuất
+                            Log out
                           </button>
                         </Link>
                       </Menu.Item>
@@ -123,7 +116,7 @@ const Header = () => {
                   as="a"
                   href={item.href}
                   className={classNames(
-                    "bg-white bg-opacity-20 text-textColor",
+                    "bg-white bg-opacity-20 text-white",
                     "hover:text-currentText",
                     "block rounded-lg px-3 py-2 text-base font-medium"
                   )}
