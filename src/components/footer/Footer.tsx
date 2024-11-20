@@ -7,11 +7,6 @@ export default function UserSideFooter() {
   return (
     <footer className="w-full bg-primary text-white">
       <div className="mx-auto w-full max-w-7xl px-8">
-        <div className="grid  grid-cols-1 justify-between gap-4 md:grid-cols-2">
-          <Typography variant="h5" className="mb-6 text-textColor">
-            XTaxi
-          </Typography>
-        </div>
         <div className="mt-2 flex w-full flex-col items-center justify-center border-t border-textColor border-opacity-50 py-4 md:flex-row md:justify-between text-textColor">
           <Typography
             variant="small"

@@ -1,12 +1,12 @@
 .flex-container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Chiều cao tối thiểu là chiều cao của màn hình */
+    min-height: 100vh; 
 }
 .grid-container {
     display: grid;
-    grid-template-rows: auto 1fr auto; /* Header và footer có chiều cao tự động, main chiếm hết khoảng trống */
-    min-height: 100vh; /* Chiều cao tối thiểu của toàn bộ trang */
+    grid-template-rows: auto 1fr auto; 
+    min-height: 100vh; 
 }
 
 
