@@ -3,9 +3,9 @@ import React from "react";
 
 const currentYear = new Date().getFullYear();
 
-export default function UserSideFooter() {
+export default function HomeFooter() {
   return (
-    <footer className="w-full px-6 text-white flex items-center justify-end fixed bottom-0">
+    <footer className="w-full text-white bg-primary">
       <div className="mx-auto w-full max-w-7xl px-8">
         <div className="mt-2 flex w-full flex-col items-center justify-center border-t border-textColor border-opacity-50 py-4 md:flex-row md:justify-between text-textColor">
           <Typography

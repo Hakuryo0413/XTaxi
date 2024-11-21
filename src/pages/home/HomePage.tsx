@@ -1,8 +1,8 @@
-import UserSideFooter from "@src/components/footer/Footer";
 import { Home } from "@src/components/home";
 import React from "react";
 import './HomePage.css'
 import { Header } from "@src/components/header";
+import HomeFooter from "@src/components/home/HomeFooter/HomeFooter";
 
 
 function HomePage() {
@@ -12,7 +12,7 @@ function HomePage() {
       <div className="flex-1">
         <Home />
       </div>
-      <UserSideFooter />
+      <HomeFooter />
     </div>
   );
 }

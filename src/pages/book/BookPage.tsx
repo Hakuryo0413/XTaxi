@@ -1,16 +1,16 @@
 import { Book } from "@src/components/book";
-import UserSideFooter from "@src/components/footer/Footer";
-import { HomeHeader } from "@src/components/home/HomeHeader";
+import { Header } from "@src/components/header";
+import HomeFooter from "@src/components/home/HomeFooter/HomeFooter";
 import React from "react";
 
 function BookPage() {
   return (
     <div className="flex flex-col bg-primary h-screen">
-      <HomeHeader />
+      <Header />
       <div className="flex-1">
         <Book />
       </div>
-      <UserSideFooter />
+      <HomeFooter />
     </div>
   );
 }
