@@ -2,6 +2,7 @@ import React from "react";
 import { Space } from "antd";
 import type { TableProps } from "antd";
 import { StyledTable } from "./styles";
+import ManageConfigProvider from "./ManageConfigProvider";
 
 export interface DataType {
   key: string;
@@ -73,9 +74,9 @@ const data: DataType[] = [
 
 const TaxiTable: React.FC = () => {
   return (
-    <div>
+    <ManageConfigProvider>
       <StyledTable columns={columns} dataSource={data} />;
-    </div>
+    </ManageConfigProvider>
   );
 };
 
