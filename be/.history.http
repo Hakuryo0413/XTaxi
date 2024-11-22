@@ -1,0 +1,62 @@
+@baseUrl = http://localhost:3000/rideHistory
+### Get driver's ride history (with all optional filters)
+GET {{baseUrl}}/driver/673c03f5b77ab9ce05b33b0f?startDate=2024-01-01&endDate=2024-12-31&status=completed&limit=10&page=1
+Content-Type: application/json
+# Replace 673c03f5b77ab9ce05b33b0f with actual driver ID
+
+### Get driver's ride history (basic)
+GET {{baseUrl}}/driver/673c03f5b77ab9ce05b33b0f
+Content-Type: application/json
+# Replace 673c03f5b77ab9ce05b33b0f with actual driver ID
+
+### Get driver's income statistics (daily grouping)
+GET {{baseUrl}}/income/673c03f5b77ab9ce05b33b0f?startDate=2024-01-01&endDate=2024-12-31&groupBy=day
+Content-Type: application/json
+# Replace 673c03f5b77ab9ce05b33b0f with actual driver ID
+
+### Get driver's income statistics (monthly grouping)
+GET {{baseUrl}}/income/673c03f5b77ab9ce05b33b0f?groupBy=month
+Content-Type: application/json
+# Replace 673c03f5b77ab9ce05b33b0f with actual driver ID
+
+### Get driver's income statistics (yearly grouping)
+GET {{baseUrl}}/income/673c03f5b77ab9ce05b33b0f?groupBy=year
+Content-Type: application/json
+# Replace 673c03f5b77ab9ce05b33b0f with actual driver ID
+
+### Get driver's ratings and reviews (with pagination)
+GET {{baseUrl}}/ratings/673c03f5b77ab9ce05b33b0f?page=1&limit=10
+Content-Type: application/json
+# Replace 673c03f5b77ab9ce05b33b0f with actual driver ID
+
+### Get driver's ratings and reviews (basic)
+GET {{baseUrl}}/ratings/673c03f5b77ab9ce05b33b0f
+Content-Type: application/json
+# Replace 673c03f5b77ab9ce05b33b0f with actual driver ID
+
+### Get specific ride details
+GET {{baseUrl}}/ride/673c03f5b77ab9ce05b33b0f
+Content-Type: application/json
+# Replace 673c03f5b77ab9ce05b33b0f with actual ride ID
+
+### Example queries with different date ranges
+
+### Get last month's ride history
+GET {{baseUrl}}/driver/673c03f5b77ab9ce05b33b0f?startDate={{$datetime 'now-30d' 'YYYY-MM-DD'}}&endDate={{$datetime 'now' 'YYYY-MM-DD'}}
+Content-Type: application/json
+
+### Get this year's income statistics
+GET {{baseUrl}}/income/673c03f5b77ab9ce05b33b0f?startDate={{$datetime 'now-365d' 'YYYY-MM-DD'}}&endDate={{$datetime 'now' 'YYYY-MM-DD'}}&groupBy=month
+Content-Type: application/json
+
+### Get completed rides only
+GET {{baseUrl}}/driver/673c03f5b77ab9ce05b33b0f?status=completed
+Content-Type: application/json
+
+### Get ride history with larger page size
+GET {{baseUrl}}/driver/673c03f5b77ab9ce05b33b0f?limit=50&page=1
+Content-Type: application/json
+
+### Get ratings with custom page size
+GET {{baseUrl}}/ratings/673c03f5b77ab9ce05b33b0f?limit=20&page=1
+Content-Type: application/json
