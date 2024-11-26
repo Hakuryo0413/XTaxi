@@ -43,6 +43,19 @@ const userSchema = new Schema({
   vehicle_info: {
     type: Schema.Types.ObjectId,
     ref: 'Vehicle'
+  }, 
+  location: {
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true,
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+      default: [0, 0]
+    }
   }
 }, {
   timestamps: {
@@ -52,3 +65,10 @@ const userSchema = new Schema({
 });
 const User = mongoose.model('User', userSchema);
 module.exports = User;
+
+
+/*
+Need to split into vary field to make : 
+- api get cur location of user
+- 
+ */

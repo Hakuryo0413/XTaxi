@@ -18,7 +18,7 @@ const rideHistorySchema = new Schema({
   },
   status: {
     type: String,
-    enum: ["completed", "canceled"],
+    enum: ["completed", "canceled", "ongoing"],
     required: true,
   },
   start_time: {
