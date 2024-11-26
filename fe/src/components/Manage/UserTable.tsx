@@ -2,6 +2,7 @@ import React from "react";
 import { Space } from "antd";
 import type { TableProps } from "antd";
 import { StyledTable } from "./styles";
+import ManageConfigProvider from "./ManageConfigProvider";
 
 export interface DataType {
   key: string;
@@ -14,26 +15,29 @@ export interface DataType {
 const columns: TableProps<DataType>["columns"] = [
   {
     title: "ID",
+    dataIndex: "id",
+    key: "id",
+    render: (text) => <a>{text}</a>,
+  },
+  {
+    title: "Name",
     dataIndex: "name",
     key: "name",
-    render: (text) => <a>{text}</a>,
   },
   {
-    title: "Driver ID",
-    dataIndex: "age",
-    key: "age",
-  },
-
-  {
-    title: "Registered Date",
-    dataIndex: "address",
-    key: "address",
+    title: "Phone number",
+    dataIndex: "phone_number",
+    key: "phone_number",
   },
   {
-    title: "Status",
-    key: "tags",
-    dataIndex: "tags",
-    render: (text) => <a>{text}</a>,
+    title: "Rating",
+    key: "rating",
+    dataIndex: "rating",
+  },
+  {
+    title: "Vehicle",
+    key: "vehicle",
+    dataIndex: "vehicle",
   },
   {
     title: "Action",
@@ -71,12 +75,12 @@ const data: DataType[] = [
   },
 ];
 
-const TaxiTable: React.FC = () => {
+const UserTable: React.FC = () => {
   return (
-    <div>
+    <ManageConfigProvider>
       <StyledTable columns={columns} dataSource={data} />;
-    </div>
+    </ManageConfigProvider>
   );
 };
 
-export default TaxiTable;
+export default UserTable;

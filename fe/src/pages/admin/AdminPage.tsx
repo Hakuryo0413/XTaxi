@@ -1,9 +1,10 @@
 import React from "react";
 import { ConfigProvider, Tabs } from "antd";
 import type { TabsProps } from "antd";
-import { TaxiTable } from "@src/components/Manage";
+import { DriverTable, TaxiTable, UserTable } from "@src/components/Manage";
 import UserSideFooter from "@src/components/footer/Footer";
 import { COLOR } from "@src/color";
+import { AdminHeader } from "@src/components/header";
 
 const onChange = (key: string) => {
   console.log(key);
@@ -13,12 +14,12 @@ const items: TabsProps["items"] = [
   {
     key: "driver",
     label: "Driver",
-    children: <TaxiTable />,
+    children: <DriverTable />,
   },
   {
     key: "user",
     label: "User",
-    children: <TaxiTable />,
+    children: <UserTable />,
   },
   {
     key: "vehicle",
@@ -41,6 +42,7 @@ const AdminPage: React.FC = () => (
     }}
   >
     <div className="bg-primary h-screen">
+      <AdminHeader />
       <Tabs
         centered
         defaultActiveKey="driver"

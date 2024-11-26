@@ -47,7 +47,7 @@ const RegisterForm: React.FC = () => {
       }}
     >
       <div className="px-12 sm:px-40 lg:px-96 md:px-80">
-        <p className="text-white text-3xl font-bold my-6">Register</p>
+        <p className="text-white text-3xl font-bold my-2">Register</p>
         <Form layout="vertical" form={form} onFinish={onFinish}>
           <Form.Item
             name={FormFieldName.Username}
