@@ -5,6 +5,7 @@ import HomePage from "./pages/home/HomePage";
 import AboutPage from "./pages/about/AboutPage";
 import BookPage from "./pages/book/BookPage";
 import AdminRouter from "./routes/admin/AdminRouter";
+import DriverRoute from "./routes/driver/DriverRoute";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
 
           <Route path="/*" element={<UserRouter />} />
           <Route path="/admin/*" element={<AdminRouter />} />
+          <Route path="/driver/*" element={<DriverRoute />} />
         </Routes>
       </Router>
     </div>

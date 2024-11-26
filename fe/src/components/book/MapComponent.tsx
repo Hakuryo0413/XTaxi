@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-hash';
@@ -22,6 +22,23 @@ type Location = {
 const MapComponent: React.FC<MapComponentProps> = React.memo(({ onDistanceChange }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
+  const [currentLocation, setCurrentLocation] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null);
+
+  useEffect(() => {
+    // Get current location
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setCurrentLocation({ lat: latitude, lng: longitude });
+      },
+      (error) => {
+        console.error('Error fetching current location:', error);
+      }
+    );
+  }, []);
 
   useEffect(() => {
     if (mapRef.current && !mapInstanceRef.current) {
@@ -45,7 +62,7 @@ const MapComponent: React.FC<MapComponentProps> = React.memo(({ onDistanceChange
       }).addTo(map);
 
       // Tọa độ pickup và dropoff
-      const pickupLatLng = L.latLng(21.028511, 105.804817); // Hà Nội
+      const pickupLatLng = L.latLng(currentLocation.lat, currentLocation.lng); // Hà Nội
       const dropoffLatLng = L.latLng(21.036985, 105.782062); // Một địa điểm khác
 
       // Thêm tính năng chỉ đường
@@ -92,7 +109,11 @@ const MapComponent: React.FC<MapComponentProps> = React.memo(({ onDistanceChange
         mapInstanceRef.current = null;
       };
     }
-  }, [onDistanceChange]);
+  }, [currentLocation, onDistanceChange]);
+
+  if (!currentLocation) {
+    return <div>Loading...</div>; // Wait for the current location to load
+  }
 
   // Hàm reverse geocoding để lấy địa chỉ từ tọa độ
   const reverseGeocode = async (latLng: L.LatLng): Promise<string> => {
