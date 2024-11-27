@@ -26,7 +26,7 @@ const initialTrips: Trip[] = [
       lat: 21.028511,
       lng: 105.804817,
     },
-    status: 'accepted',
+    status: 'requested',
   },
   {
     id: 2,
@@ -37,7 +37,7 @@ const initialTrips: Trip[] = [
       lat: 10.823099,
       lng: 106.629662,
     },
-    status: 'accepted',
+    status: 'requested',
   },
   // Add more trips as needed
 ];
@@ -46,8 +46,18 @@ const DriverTrip: React.FC = () => {
   const [trips, setTrips] = useState<Trip[]>(initialTrips);
   const navigate = useNavigate();
 
+  // Handle location redirection
   const handleLocation = (trip: Trip) => {
-    navigate('/locationMap', { state: { location: trip.location } }); // Pass location to LocationMap
+    navigate('/driver/locationTrip', { state: { location: trip.location } }); // Pass location to LocationMap
+  };
+
+  // Handle status update
+  const handleAccept = (id: number) => {
+    setTrips((prevTrips) =>
+      prevTrips.map((trip) =>
+        trip.id === id ? { ...trip, status: 'accepted' } : trip
+      )
+    );
   };
 
   return (
@@ -70,13 +80,23 @@ const DriverTrip: React.FC = () => {
               <td>{trip.location.address}</td>
               <td>{trip.status}</td>
               <td>
-                {trip.status === 'accepted' && (
-                  <button
-                    className="pay-button"
-                    onClick={() => handleLocation(trip)}
-                  >
-                    Location
-                  </button>
+                {trip.status === 'requested' ? (
+                  <>
+                    <button
+                      className="accept-button"
+                      onClick={() => handleAccept(trip.id)}
+                    >
+                      Accept
+                    </button>
+                    <button
+                      className="pay-button"
+                      onClick={() => handleLocation(trip)}
+                    >
+                      Location
+                    </button>
+                  </>
+                ) : (
+                  <span>No Actions</span>
                 )}
               </td>
             </tr>

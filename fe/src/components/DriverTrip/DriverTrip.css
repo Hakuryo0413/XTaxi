@@ -39,7 +39,7 @@
   }
   
   .pay-button {
-    padding: 6px 30px;
+    padding: 6px 20px;
     background-color: #4caf50;
     color: white;
     font-weight: bold;
@@ -48,9 +48,20 @@
     cursor: pointer;
   }
   
-  .pay-button:hover {
+  .pay-button, .accept-button:hover {
     background-color: #45a049;
   }
+
+  .accept-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    font-weight: bold;
+    padding: 5px 20px;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+  
   
   @media (max-width: 768px) {
   .history-trip-container {
@@ -80,7 +91,7 @@
     padding: 6px;
   }
   
-  .pay-button {
+  .pay-button, .accept-button {
     padding: 4px 8px;
     font-size: 12px;
   }
