@@ -36,7 +36,7 @@ const Book: React.FC = () => {
   const handleBooking = (carType: string) => {
     handleChoose(carType);
     if (selectedCar && distance) {
-      const rate = selectedCar === 'Sedan' ? 10000 : 15000;
+      const rate = selectedCar === 'Sedan' ? 15000 : 10000;
       const fare = (distance / 1000) * rate;
       setBookingStatus(`Booked a ${selectedCar} for ${(distance / 1000).toFixed(2)} km. Fare: ${fare.toLocaleString()}đ.`);
     } else {
