@@ -7,6 +7,7 @@ import { Image } from "antd";
 
 const navigation = [
   { name: "Trip", href: "/driver/DriverTrip", current: false },
+  { name: "History", href: "/driver/HistoryDriver", current: false },
   { name: "Profile", href: "/driver/DriverProfile", current: false },
 ];
 

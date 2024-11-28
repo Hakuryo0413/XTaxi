@@ -1,6 +1,7 @@
 import AboutPage from "@src/pages/about/AboutPage";
 import DriverProfilePage from "@src/pages/driver/DriverProfilePage";
 import DriverTripPage from "@src/pages/driver/DriverTripPage";
+import HistoryDriverPage from "@src/pages/driver/HistoryDriverPage";
 import LocationTripPage from "@src/pages/driver/LocationTripPage";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
@@ -12,6 +13,7 @@ function DriverRoute() {
             <Route path="/DriverAbout" element={<AboutPage />} />
             <Route path="/locationTrip" element={<LocationTripPage />} />
             <Route path="/DriverProfile" element={<DriverProfilePage />} />
+            <Route path="/HistoryDriver" element={<HistoryDriverPage />} />
       </Routes>
     </div>
   );
