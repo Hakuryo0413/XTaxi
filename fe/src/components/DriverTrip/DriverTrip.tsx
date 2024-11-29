@@ -88,16 +88,16 @@ const DriverTrip: React.FC = () => {
                     >
                       Accept
                     </button>
-                    <button
+                  </>
+                ) : (
+                  <span></span>
+                )}
+                <button
                       className="pay-button"
                       onClick={() => handleLocation(trip)}
                     >
                       Location
-                    </button>
-                  </>
-                ) : (
-                  <span>No Actions</span>
-                )}
+                </button>
               </td>
             </tr>
           ))}
