@@ -40,7 +40,7 @@ const Payment: React.FC = () => {
         </div>
         <div className="flex justify-between py-2">
           <div className="flex gap-2">
-            <ZaloPay width={24} height={24} />
+            {/* <ZaloPay width={24} height={24} /> */}
             <p>ZaloPay</p>
           </div>
 

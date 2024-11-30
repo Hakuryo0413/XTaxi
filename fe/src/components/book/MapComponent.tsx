@@ -47,8 +47,9 @@ const MapComponent: React.FC<MapComponentProps> = React.memo(({ onDistanceChange
       mapInstanceRef.current = map;
 
       // Thiết lập Tile Layer
-      L.tileLayer('https://tmdt.fimo.edu.vn/hot/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      L.tileLayer("https://tmdt.fimo.edu.vn/hot/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 21,
         maxNativeZoom: 20,
       }).addTo(map);

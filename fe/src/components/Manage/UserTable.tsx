@@ -3,6 +3,7 @@ import { Space } from "antd";
 import type { TableProps } from "antd";
 import { StyledTable } from "./styles";
 import ManageConfigProvider from "./ManageConfigProvider";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 export interface DataType {
   key: string;
@@ -34,18 +35,13 @@ const columns: TableProps<DataType>["columns"] = [
     key: "rating",
     dataIndex: "rating",
   },
-  {
-    title: "Vehicle",
-    key: "vehicle",
-    dataIndex: "vehicle",
-  },
+
   {
     title: "Action",
     key: "action",
     render: (_, record) => (
       <Space size="middle">
-        <a>Edit</a>
-        <a>Delete</a>
+       <EditOutlined /> <DeleteOutlined />
       </Space>
     ),
   },

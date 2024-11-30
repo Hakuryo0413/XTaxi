@@ -1,6 +1,8 @@
 import React from "react";
 import { Button, ConfigProvider, Form, Input } from "antd";
 import { COLOR } from "@src/color";
+import { IsLoginLocalStorage, Role, baseUserUrl } from "@src/utils/common";
+import { useNavigate } from "react-router-dom";
 enum FormFieldName {
   Username = "username",
   Password = "password",
@@ -11,19 +13,47 @@ type FormFieldValue = {
   Password: string;
 };
 
+async function loginUser(values: FormFieldValue) {
+  const url = `${baseUserUrl}/login`;
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    console.log("User logged in successfully:", data);
+    localStorage.setItem(IsLoginLocalStorage, "true");
+  } catch (error) {
+    console.error("Error logging in user:", error);
+    localStorage.setItem(IsLoginLocalStorage, "false");
+  }
+}
+
 const LoginForm: React.FC = () => {
   const [form] = Form.useForm<FormFieldValue>();
+  const navigate = useNavigate();
 
-  const onFinish = (values: FormFieldValue) => {
-    console.log(values);
+  const onFinish = async (values: FormFieldValue) => {
+    await loginUser(values);
+    if (localStorage.getItem(IsLoginLocalStorage) === "true")
+      navigate("/booking");
+    else console.log("Login failed");
   };
+
   return (
     <ConfigProvider
       theme={{
         components: {
           Form: {
             labelColor: COLOR.YELLOW,
-            // labelColor: "#FCCD04",
           },
           Button: {
             defaultBg: "#FCCD04",
@@ -57,13 +87,17 @@ const LoginForm: React.FC = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button htmlType="submit" className="w-full pr-4">
+            <Button
+              htmlType="submit"
+              className="w-full pr-4"
+              onClick={() => onFinish}
+            >
               LOGIN
             </Button>
           </Form.Item>
           <div className="flex text-white justify-center gap-2">
             <p>Don't have an account ?</p>
-            <a href="/register">Register here</a>
+            <button onClick={() => navigate("/register")}>Register here</button>
           </div>
         </Form>
       </div>

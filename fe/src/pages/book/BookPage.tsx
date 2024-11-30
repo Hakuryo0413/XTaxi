@@ -1,6 +1,6 @@
 import { Book } from "@src/components/book";
+import { HomeFooter } from "@src/components/footer";
 import { UserHeader } from "@src/components/header";
-import HomeFooter from "@src/components/home/HomeFooter/HomeFooter";
 import React from "react";
 
 function BookPage() {

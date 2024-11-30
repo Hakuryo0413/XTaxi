@@ -1,17 +1,16 @@
 import styled from "styled-components";
 import { Table, TableProps } from "antd";
-import { DataType } from "../TaxiTable";
 
-export const StyledTable = styled(Table)<TableProps<DataType>>`
+export const StyledTable = styled(Table)<TableProps<any>>`
   .ant-table {
     margin-inline: 100px;
   }
-    thead.ant-table-thead > tr > th {
-      padding: 16px 16px;
-    }
-    tbody.ant-table-tbody > tr > td {
-      padding: 16px 16px;
-    }
+  thead.ant-table-thead > tr > th {
+    padding: 16px 16px;
+  }
+  tbody.ant-table-tbody > tr > td {
+    padding: 16px 16px;
+  }
 
   @media (max-width: 768px) {
     .ant-table {
