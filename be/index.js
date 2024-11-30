@@ -1,21 +1,22 @@
 const express = require("express");
-const cors = require("cors");
+require('dotenv').config();
 const bodyParser = require("body-parser");
+const setupMiddleware = require("./src/utils/middleware");
+const connectMongooses = require("./src/utils/mongo");
+const logger = require("./src/utils/logger")
 const UserRouter = require("./src/routes/user");
 const RideHistoryRouter = require("./src/routes/rideHistory");
-const RideRouter = require("./src/routes/driver");
+const DriverRouter = require("./src/routes/driver");
 //connect to database
 const mongoose = require("mongoose");
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middleware
-app.use(cors()); // Enable CORS for all routes
-app.use(bodyParser.json()); // Parse JSON bodies
-app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
+setupMiddleware(app);
+
 app.use("/user", UserRouter);
 app.use("/rideHistory", RideHistoryRouter);
-app.use("/driver", RideRouter);
+app.use("/driver", DriverRouter);
 // Basic error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -34,8 +35,11 @@ app.get("/", (req, res) => {
   });
 });
 
-// Start server
-app.listen(port, () => {
-  mongoose.connect("mongodb+srv://mvotx:mvotx2024rd1%40T@mvotxdb.foauf.mongodb.net/?retryWrites=true&w=majority&appName=mvotxdb");
-  console.log(`Server is running on port ${port}`);
-});
+const startServer = async () => {
+  await connectMongooses();
+  app.listen(port, () => {
+    logger.info(`Server is running on port ${port}`);
+  });
+};
+
+startServer();

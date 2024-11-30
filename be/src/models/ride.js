@@ -71,3 +71,6 @@ const rideSchema = new Schema(
 );
 const Ride = mongoose.model("Ride", rideSchema);
 module.exports = Ride;
+
+
+//Ques : whwy need 2 things for ride and ride history - same field
