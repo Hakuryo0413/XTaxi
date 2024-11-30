@@ -1,6 +1,6 @@
 import { Book } from "@src/components/book";
+import { Footer } from "@src/components/footer";
 import { Header } from "@src/components/header";
-import HomeFooter from "@src/components/home/HomeFooter/HomeFooter";
 import React from "react";
 
 function BookPage() {
@@ -10,7 +10,7 @@ function BookPage() {
       <div className="flex-1">
         <Book />
       </div>
-      <HomeFooter />
+      <Footer />
     </div>
   );
 }
