@@ -64,28 +64,27 @@ exports.sendMessage = async (req, res) => {
 
 exports.getMessages = async (req, res) => {
     try {
-      const { chat_id } = req.params;
-  
-      if (!chat_id) {
-        return res.status(400).json({
-          success: false,
-          message: "chat_id is required."
+        const { chat_id } = req.params;
+
+        if (!chat_id) {
+            return res.status(400).json({
+                success: false,
+                message: "chat_id is required."
+            });
+        }
+
+        // Fetch all messages for a chat
+        const messages = await Message.find({ chat_id }).sort({ created_at: 1 });
+
+        res.status(200).json({
+            success: true,
+            messages
         });
-      }
-  
-      // Fetch all messages for a chat
-      const messages = await Message.find({ chat_id }).sort({ created_at: 1 });
-  
-      res.status(200).json({
-        success: true,
-        messages
-      });
     } catch (error) {
-      console.error("Error fetching messages:", error);
-      res.status(500).json({
-        success: false,
-        message: "Internal server error."
-      });
+        console.error("Error fetching messages:", error);
+        res.status(500).json({
+            success: false,
+            message: "Internal server error."
+        });
     }
-  };
-  
+};
