@@ -1,7 +1,6 @@
 import { DriverProfile } from "@src/components/DriverProfile";
-import UserSideFooter from "@src/components/footer/Footer";
 import { DriverHeader } from "@src/components/header";
-import HomeFooter from "@src/components/home/HomeFooter/HomeFooter";
+import HomeFooter from "@src/components/footer/HomeFooter";
 import React from "react";
 
 function DriverProfilePage() {
