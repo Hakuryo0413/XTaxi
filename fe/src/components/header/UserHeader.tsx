@@ -4,6 +4,14 @@ import React from "react";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { Image } from "antd";
+import { IsLoginLocalStorage } from "@src/utils/common";
+
+const navigationGuest = [
+  { name: "Book", href: "/booking", current: false },
+  { name: "About", href: "/about", current: false },
+  { name: "Register", href: "/register", current: false },
+  { name: "Login", href: "/login", current: false },
+];
 
 const navigation = [
   { name: "Book", href: "/booking", current: false },
@@ -12,12 +20,12 @@ const navigation = [
   { name: "Driver", href: "/LocationDriver", current: false },
   { name: "Profile", href: "/Profile", current: false },
 ];
-
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
 const UserHeader = () => {
+  const isLogin = localStorage.getItem(IsLoginLocalStorage) === "true";
   return (
     <Disclosure as="nav" className="bg-primary z-50">
       {({ open }) => (
@@ -32,7 +40,7 @@ const UserHeader = () => {
 
               <div className="flex-1 justify-center items-center hidden lg:flex">
                 <div className="flex space-x-4 ">
-                  {navigation.map((item) => (
+                  {(isLogin ? navigation : navigationGuest).map((item) => (
                     <a
                       key={item.name}
                       href={item.href}
@@ -60,50 +68,56 @@ const UserHeader = () => {
                     )}
                   </Disclosure.Button>
                 </div>
-
-                <Menu as="div" className="relative ml-3">
-                  <div>
-                    <Menu.Button className="flex rounded-full text-sm hover:opacity-50 ">
-                      <span className="sr-only">Open user menu</span>
-                      <svg
-                        className="w-8 h-8 text-gray-400 -left-1"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                          clip-rule="evenodd"
-                        ></path>
-                      </svg>
-                    </Menu.Button>
-                  </div>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-background">
-                      <Menu.Item>
-                        <Link to={"/"}>
-                          <button
-                            className={classNames(
-                              "block px-4 py-2 text-sm hover:opacity-50"
-                            )}
-                            onClick={() => {}}
-                          >
-                            Log out
-                          </button>
-                        </Link>
-                      </Menu.Item>
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
+                {isLogin && (
+                  <Menu as="div" className="relative ml-3">
+                    <div>
+                      <Menu.Button className="flex rounded-full text-sm hover:opacity-50 ">
+                        <span className="sr-only">Open user menu</span>
+                        <svg
+                          className="w-8 h-8 text-gray-400 -left-1"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                            clip-rule="evenodd"
+                          ></path>
+                        </svg>
+                      </Menu.Button>
+                    </div>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="absolute right-0 z-999999 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none text-background">
+                        <Menu.Item>
+                          <Link to={"/"}>
+                            <button
+                              className={classNames(
+                                "block px-4 py-2 text-sm hover:opacity-50"
+                              )}
+                              onClick={() => {
+                                localStorage.setItem(
+                                  IsLoginLocalStorage,
+                                  "false"
+                                );
+                              }}
+                            >
+                              Log out
+                            </button>
+                          </Link>
+                        </Menu.Item>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                )}
               </div>
             </div>
           </div>
