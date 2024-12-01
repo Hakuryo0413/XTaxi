@@ -6,7 +6,7 @@ import React from "react";
 
 function LocationMapPage() {
   return (
-    <div className="bg-primary h-screen">
+    <div className="flex flex-col bg-primary h-screen">
       <UserHeader />
       <LocationMap />
       <HomeFooter />

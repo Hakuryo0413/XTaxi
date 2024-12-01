@@ -5,7 +5,7 @@ import React from "react";
 
 function LocationTripPage() {
   return (
-    <div className="bg-primary h-screen">
+    <div className="flex flex-col bg-primary h-screen">
       <DriverHeader />
       <LocationTrip />
       <HomeFooter />
