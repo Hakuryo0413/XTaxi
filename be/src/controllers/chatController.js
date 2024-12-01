@@ -1,3 +1,5 @@
+const Chat = require("../models/chat")
+const Message = require("../models/message")
 exports.getOrCreateChat = async (req, res) => {
     try {
         const { user_id, driver_id } = req.body;

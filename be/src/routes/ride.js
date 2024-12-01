@@ -18,4 +18,6 @@ router.put("/", rideController.updateRide)
  * @description Fetch all requested rides
  * @route GET /api/ride/
  */
-router.get("/", rideController.getRequestedRides);
+router.get("/requested", rideController.getRequestedRides);
+
+module.exports = router;
