@@ -10,7 +10,6 @@ const rideSchema = new Schema(
     driver_id: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      required: true,
     },
     pickup_location: {
       address: {

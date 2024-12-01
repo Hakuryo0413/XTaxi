@@ -7,6 +7,8 @@ const logger = require("./src/utils/logger")
 const UserRouter = require("./src/routes/user");
 const RideHistoryRouter = require("./src/routes/rideHistory");
 const DriverRouter = require("./src/routes/driver");
+const RideRouter = require("./src/routes/ride")
+const ChatRouter = require("./src/routes/chat")
 //connect to database
 const mongoose = require("mongoose");
 const app = express();
@@ -17,6 +19,8 @@ setupMiddleware(app);
 app.use("/user", UserRouter);
 app.use("/rideHistory", RideHistoryRouter);
 app.use("/driver", DriverRouter);
+app.use("/ride", RideRouter);
+app.use("/chat", ChatRouter);
 // Basic error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
