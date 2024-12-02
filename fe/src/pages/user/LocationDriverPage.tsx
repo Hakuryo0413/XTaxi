@@ -1,18 +1,16 @@
-import { About } from "@src/components/about";
+import { LocationDriver } from "@src/components/LocationDriver";
 import UserSideFooter from "@src/components/footer/Footer";
 import { UserHeader } from "@src/components/header";
 import React from "react";
 
-function AboutPage() {
+function LocationDriverPage() {
   return (
-    <div className="flex flex-col bg-primary h-screen">
+    <div className="bg-primary h-screen">
       <UserHeader />
-      <div className="flex-1">
-      <About />
-      </div>
+      <LocationDriver />
       <UserSideFooter />
     </div>
   );
 }
 
-export default AboutPage;
+export default LocationDriverPage;

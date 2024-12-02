@@ -1,0 +1,116 @@
+.history-trip-container {
+  flex: 1;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: transparent;
+}
+
+.history-trip-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.trip-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.trip-table th, .trip-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.trip-table th {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.trip-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.trip-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.pay-button {
+  padding: 6px 30px;
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pay-button:hover {
+  background-color: #45a049;
+}
+
+@media (max-width: 768px) {
+.history-trip-container {
+  padding: 15px;
+}
+
+.trip-table th, .trip-table td {
+  padding: 8px;
+  font-size: 14px;
+}
+
+.history-trip-title {
+  font-size: 18px;
+}
+}
+
+@media (max-width: 480px) {
+.history-trip-container {
+  padding: 10px;
+}
+
+.trip-table {
+  font-size: 12px;
+}
+
+.trip-table th, .trip-table td {
+  padding: 6px;
+}
+
+.pay-button {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+}
+.payment-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  max-width: 400px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.payment-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.complete-payment-button {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.complete-payment-button:hover {
+  background-color: #45a049;
+}
+
