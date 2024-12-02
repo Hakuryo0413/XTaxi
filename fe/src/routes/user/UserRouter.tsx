@@ -1,4 +1,9 @@
-import { LoginPage, RegisterPage, PaymentPage } from "@src/pages/user";
+import {
+  LoginPage,
+  RegisterPage,
+  PaymentPage,
+  OffersPage,
+} from "@src/pages/user";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 function UserRouter() {
@@ -9,6 +14,7 @@ function UserRouter() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/offers" element={<OffersPage />} />
       </Routes>
     </div>
   );

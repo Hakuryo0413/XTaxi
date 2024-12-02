@@ -15,10 +15,12 @@
     "@material-tailwind/react": "^2.1.10",
     "antd": "^5.21.6",
     "antd-style": "^3.7.1",
+    "lazysizes": "^5.3.2",
     "leaflet": "^1.9.4",
     "leaflet-hash": "^0.2.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-infinite-scroll-component": "^6.1.0",
     "styled-components": "^6.1.13"
   },
   "devDependencies": {
@@ -34,6 +36,7 @@
     "eslint-plugin-react-refresh": "^0.4.14",
     "globals": "^15.11.0",
     "postcss": "^8.4.47",
+    "react-image-webp": "^0.8.0",
     "tailwindcss": "^3.4.14",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.11.0",

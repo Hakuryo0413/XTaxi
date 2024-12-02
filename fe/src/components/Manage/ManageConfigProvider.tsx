@@ -16,9 +16,23 @@ const ManageConfigProvider: React.FC<{ children: React.ReactNode }> = ({
             colorText: "white",
             borderColor: "white",
           },
-
           Radio: {
             wrapperMarginInlineEnd: 0,
+            colorPrimary: COLOR.YELLOW,
+          },
+          List: {
+            colorTextDescription: "white",
+            colorSplit: COLOR.YELLOW,
+            itemPadding: "12px 40px",
+          },
+          Checkbox: {
+            colorPrimary: COLOR.YELLOW,
+            colorPrimaryHover: COLOR.YELLOW,
+          },
+          Button: {
+            defaultBg: "#FCCD04",
+            defaultBorderColor: "transparent",
+            defaultHoverBg: "#FCCD04",
           },
         },
       }}

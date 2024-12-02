@@ -64,7 +64,9 @@ const AdminHeader = () => {
                             className={classNames(
                               "block px-4 py-2 text-sm hover:opacity-50"
                             )}
-                            onClick={() => {}}
+                            onClick={() => {
+                              localStorage.clear();
+                            }}
                           >
                             Log out
                           </button>
