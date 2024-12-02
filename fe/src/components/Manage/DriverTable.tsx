@@ -3,9 +3,9 @@ import { Space } from "antd";
 import type { TableProps } from "antd";
 import { StyledTable } from "./styles";
 import ManageConfigProvider from "./ManageConfigProvider";
-import { baseDriverUrl } from "@src/utils/common";
+import { baseUserUrl } from "@src/utils/common";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-export interface DriverDataType {
+export interface DataType {
   _id: string;
   name: string;
   phone_number: string;
@@ -13,13 +13,13 @@ export interface DriverDataType {
   income: string;
 }
 
-const columns: TableProps<DriverDataType>["columns"] = [
+const columns: TableProps<DataType>["columns"] = [
   {
     title: "ID",
     dataIndex: "_id",
     key: "_id",
     render: (text) => (
-      <a onClick={() => alert("fasdfs")}>
+      <a onClick={() => alert(text)}>
         {text.slice(0, 3) + "..." + text.slice(-3)}
       </a>
     ),
@@ -52,10 +52,10 @@ const columns: TableProps<DriverDataType>["columns"] = [
 ];
 
 const DriverTable: React.FC = () => {
-  const [data, setData] = useState<DriverDataType[]>([]);
+  const [data, setData] = useState<DataType[]>([]);
   const fetchData = async () => {
     try {
-      const response = await fetch(`${baseDriverUrl}/all`, {
+      const response = await fetch(`${baseUserUrl}/all?role=driver`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
