@@ -1,7 +1,11 @@
 import React from "react";
 import { Button, ConfigProvider, Form, Input } from "antd";
 import { COLOR } from "@src/color";
-import { IsLoginLocalStorage, Role, baseUserUrl } from "@src/utils/common";
+import {
+  IsLoginLocalStorage,
+  RoleLocalStorage,
+  baseUserUrl,
+} from "@src/utils/common";
 import { useNavigate } from "react-router-dom";
 enum FormFieldName {
   Username = "username",
@@ -31,6 +35,7 @@ async function loginUser(values: FormFieldValue) {
     const data = await response.json();
     console.log("User logged in successfully:", data);
     localStorage.setItem(IsLoginLocalStorage, "true");
+    localStorage.setItem(RoleLocalStorage, data.data.role);
   } catch (error) {
     console.error("Error logging in user:", error);
     localStorage.setItem(IsLoginLocalStorage, "false");
@@ -44,8 +49,12 @@ const LoginForm: React.FC = () => {
   const onFinish = async (values: FormFieldValue) => {
     await loginUser(values);
     if (localStorage.getItem(IsLoginLocalStorage) === "true")
-      navigate("/booking");
-    else console.log("Login failed");
+      if (localStorage.getItem(RoleLocalStorage) === "user")
+        navigate("/booking");
+      else if (localStorage.getItem(RoleLocalStorage) === "driver")
+        navigate("/driver");
+      else if (localStorage.getItem(RoleLocalStorage) === "admin")
+        navigate("/admin/manage");
   };
 
   return (
