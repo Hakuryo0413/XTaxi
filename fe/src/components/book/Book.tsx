@@ -1,9 +1,9 @@
-import React, { useCallback, useState } from 'react';
-import './Book.css';
-import MapComponent from './MapComponent';
-
-import imgTaxi1 from '@src/image/sedan10.png';
-import imgTaxi2 from '@src/image/van10.png';
+import React, { useCallback, useEffect, useState } from "react";
+import "./Book.css";
+import MapComponent from "./MapComponent";
+import imgTaxi1 from "@src/image/sedan10.png";
+import imgTaxi2 from "@src/image/van10.png";
+import { Offers } from "../Payment";
 
 type Location = {
   address: string;
@@ -11,16 +11,37 @@ type Location = {
   lng: number;
 };
 
+const user_id = localStorage.getItem("user_id");
+
 const Book: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCar, setSelectedCar] = useState<string | null>(null);
   const [distance, setDistance] = useState<number | null>(null);
   const [bookingStatus, setBookingStatus] = useState<string | null>(null);
   const [pickupLocation, setPickupLocation] = useState<Location | null>(null); // Lưu thông tin điểm bắt đầu
   const [dropoffLocation, setDropoffLocation] = useState<Location | null>(null); // Lưu thông tin điểm kết thúc
+  const [offers, setOffers] = useState(0);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setOffers(10);
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   // Callback để nhận thông tin từ MapComponent
   const handleDistanceChange = useCallback(
-    (newDistance: number, newPickupLocation: Location, newDropoffLocation: Location) => {
+    (
+      newDistance: number,
+      newPickupLocation: Location,
+      newDropoffLocation: Location
+    ) => {
       setDistance(newDistance);
       setPickupLocation(newPickupLocation);
       setDropoffLocation(newDropoffLocation);
@@ -35,40 +56,50 @@ const Book: React.FC = () => {
 
   const handleEstimate = (carType: string) => {
     handleChoose(carType);
-      const rate = selectedCar === 'Sedan' ? 15000 : 10000;
-      const fare = (distance / 1000) * rate;
-      setBookingStatus(`Booked a ${selectedCar} for ${(distance / 1000).toFixed(2)} km. Fare: ${fare.toLocaleString()}đ.`);
+    const rate = selectedCar === "Van" ? 15000 : 10000;
+    const fare = (distance / 1000) * rate;
+    setBookingStatus(
+      `Booked a ${selectedCar} for ${(distance / 1000).toFixed(2)} km. Fare: ${(
+        fare *
+        (1 - offers / 100)
+      ).toLocaleString()}đ.`
+    );
   };
+
+  useEffect(() => {
+    handleEstimate(selectedCar);
+  }, [offers, selectedCar]);
 
   // Handle ride booking
   const handleBooking = async () => {
     if (!pickupLocation || !dropoffLocation || !distance || !selectedCar) {
-      alert('Please complete all fields before booking.');
+      alert("Please complete all fields before booking.");
       return;
     }
 
-    
-  
-    const fare = selectedCar === 'Sedan' ? (distance / 1000) * 15000 : (distance / 1000) * 10000;
-  
+    const fare =
+      selectedCar === "Van"
+        ? (distance / 1000) * 15000 * (1 - offers / 100)
+        : (distance / 1000) * 10000 * (1 - offers / 100);
+
     // In dữ liệu gửi đi để kiểm tra
-    console.log('Sending request with data:', {
-      user_id: '64f5b2c5b0fbb042dc9a1234',  
+    console.log("Sending request with data:", {
+      user_id: user_id,
       pickup_location: pickupLocation,
       dropoff_location: dropoffLocation,
       distance,
       fare,
       start_time: new Date(),
     });
-  
+
     try {
-      const response = await fetch('http://localhost:3000/ride/', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3000/ride/", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user_id: '64f5b2c5b0fbb042dc9a1234',  // Thay bằng user_id thực tế
+          user_id: user_id, // Thay bằng user_id thực tế
           pickup_location: pickupLocation,
           dropoff_location: dropoffLocation,
           distance,
@@ -76,24 +107,31 @@ const Book: React.FC = () => {
           start_time: new Date(),
         }),
       });
-  
+
       if (!response.ok) {
         throw new Error(`API Error: ${response.statusText}`);
       }
-  
+
       const data = await response.json();
-  
+
       if (data.success) {
-        setBookingStatus(`Ride successfully booked! Fare: ${fare.toLocaleString()}đ.`);
+        setBookingStatus(
+          `Ride successfully booked! Fare: ${fare.toLocaleString()}đ.`
+        );
       } else {
-        setBookingStatus(`Failed to book ride: ${data.message || 'Please try again.'}`);
+        setBookingStatus(
+          `Failed to book ride: ${data.message || "Please try again."}`
+        );
       }
     } catch (error) {
-      console.error('Error booking ride:', error);
-      setBookingStatus(`There was an error booking the ride: ${error.message || 'Unknown error.'}`);
+      console.error("Error booking ride:", error);
+      setBookingStatus(
+        `There was an error booking the ride: ${
+          error.message || "Unknown error."
+        }`
+      );
     }
   };
-  
 
   return (
     <div className="book-container">
@@ -108,10 +146,10 @@ const Book: React.FC = () => {
             <p className="item-text">1-4 passengers</p>
             <button
               className="item-button"
-              onClick={() => handleEstimate('Sedan')}
-              disabled={selectedCar === 'Sedan'}
+              onClick={() => handleEstimate("Sedan")}
+              disabled={selectedCar === "Sedan"}
             >
-              {selectedCar === 'Sedan' ? 'CHOSEN' : 'CHOOSE'}
+              {selectedCar === "Sedan" ? "CHOSEN" : "CHOOSE"}
             </button>
           </div>
           <div className="book-right-item">
@@ -120,22 +158,33 @@ const Book: React.FC = () => {
             <p className="item-text">4-7 passengers</p>
             <button
               className="item-button"
-              onClick={() => handleEstimate('Van')}
-              disabled={selectedCar === 'Van'}
+              onClick={() => handleEstimate("Van")}
+              disabled={selectedCar === "Van"}
             >
-              {selectedCar === 'Van' ? 'CHOSEN' : 'CHOOSE'}
+              {selectedCar === "Van" ? "CHOSEN" : "CHOOSE"}
             </button>
           </div>
         </div>
         <div className="book-right-bottom">
           <div className="book-right-item">
-            <p className="item-text">{bookingStatus && <p className="item-text">{bookingStatus}</p>}</p>
-            <button className="item-button" onClick={handleBooking}>
-              BOOK
-            </button>
+            <p className="item-text">
+              {bookingStatus && <p className="item-text">{bookingStatus}</p>}
+            </p>
+            <div>
+              <button style={{ paddingInlineEnd: 40 }} onClick={showModal}>
+                Coupons
+              </button>
+
+              <button className="item-button" onClick={handleBooking}>
+                BOOK
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      {isModalOpen && (
+        <Offers open={isModalOpen} onOk={handleOk} onCancel={handleCancel} />
+      )}
     </div>
   );
 };

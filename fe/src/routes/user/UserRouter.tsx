@@ -1,9 +1,15 @@
 import AboutPage from "@src/pages/about/AboutPage";
 import BookPage from "@src/pages/book/BookPage";
 import HomePage from "@src/pages/home/HomePage";
-import { LoginPage, RegisterPage, PaymentPage, HistoryTripPage, LocationDriverPage, UserProfilePage } from "@src/pages/user";
+import {
+  LoginPage,
+  RegisterPage,
+  PaymentPage,
+  HistoryTripPage,
+  LocationDriverPage,
+  UserProfilePage,
+} from "@src/pages/user";
 import LocationMapPage from "@src/pages/user/LocationMapPage";
-import OffersPage from "@src/pages/user/OffersPage";
 
 import React from "react";
 import { Route, Routes } from "react-router-dom";
@@ -24,7 +30,6 @@ function UserRouter() {
         <Route path="/LocationDriver" element={<LocationDriverPage />} />
         <Route path="/LocationMap" element={<LocationMapPage />} />
         <Route path="/Profile" element={<UserProfilePage />} />
-        <Route path="/offers" element={<OffersPage />} />
       </Routes>
     </div>
   );

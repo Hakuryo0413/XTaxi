@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const  User = require("../models/user");
-const Vehicle  = require("../models/vehicle");
+const User = require("../models/user");
+const Vehicle = require("../models/vehicle");
 
 // @route   POST /api/driver/register
 // @desc    Register new driver with vehicle
@@ -243,6 +243,24 @@ router.put("/status/:id", async (req, res) => {
     });
   } catch (error) {
     console.error("Update status error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+});
+
+router.get("/get/vehicles", async (req, res) => {
+  try {
+    const vehicles = await Vehicle.find().exec();
+
+    return res.status(200).json({
+      success: true,
+      data: vehicles,
+      message: "All vehicles fetched successfully",
+    });
+  } catch (error) {
+    console.error("Fetch vehicles error:", error);
     return res.status(500).json({
       success: false,
       message: "Internal server error",

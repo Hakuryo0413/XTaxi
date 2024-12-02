@@ -69,7 +69,7 @@ const UserTable: React.FC = () => {
   }, []);
   return (
     <ManageConfigProvider>
-      <StyledTable columns={columns} dataSource={data} />;
+      <StyledTable columns={columns} dataSource={data} />
     </ManageConfigProvider>
   );
 };

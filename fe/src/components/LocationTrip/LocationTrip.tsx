@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import L from 'leaflet';
-import { MapContainer, TileLayer } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import L from "leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 
 interface Location {
   address: string;
@@ -25,7 +25,7 @@ const LocationTrip: React.FC = () => {
         setCurrentLocation({ lat: latitude, lng: longitude });
       },
       (error) => {
-        console.error('Error fetching current location:', error);
+        console.error("Error fetching current location:", error);
       }
     );
   }, []);
@@ -33,14 +33,15 @@ const LocationTrip: React.FC = () => {
   useEffect(() => {
     if (currentLocation && location.state) {
       // Create the map when both currentLocation and state are available
-      const map = L.map('map', {
+      const map = L.map("map", {
         center: [currentLocation.lat, currentLocation.lng],
         zoom: 13,
       });
 
       // Thiết lập Tile Layer
-      L.tileLayer('https://tmdt.fimo.edu.vn/hot/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      L.tileLayer("https://tmdt.fimo.edu.vn/hot/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 21,
         maxNativeZoom: 20,
       }).addTo(map);
@@ -55,14 +56,17 @@ const LocationTrip: React.FC = () => {
 
       // Tọa độ pickup và dropoff
       const pickupLatLng = L.latLng(currentLocation.lat, currentLocation.lng); // Current location
-      const dropoffLatLng = L.latLng(location.state.location.lat, location.state.location.lng); // Destination from LocationDriver
+      const dropoffLatLng = L.latLng(
+        location.state.location.lat,
+        location.state.location.lng
+      ); // Destination from LocationDriver
 
       // Thêm tính năng chỉ đường
       const routingControl = L.Routing.control({
         waypoints: [pickupLatLng, dropoffLatLng],
         routeWhileDragging: true,
         geocoder: L.Control.Geocoder.nominatim(),
-        serviceUrl: 'https://router.project-osrm.org/route/v1/',
+        serviceUrl: "https://router.project-osrm.org/route/v1/",
       }).addTo(map);
     }
   }, [currentLocation, location.state]);
@@ -72,7 +76,7 @@ const LocationTrip: React.FC = () => {
   }
 
   return (
-    <div id="map" style={{ height: '100vh' }}>
+    <div id="map" style={{ height: "100vh" }}>
       {/* The map will be rendered inside this div */}
     </div>
   );

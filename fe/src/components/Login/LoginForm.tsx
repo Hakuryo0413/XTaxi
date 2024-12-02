@@ -4,6 +4,7 @@ import { COLOR } from "@src/color";
 import {
   IsLoginLocalStorage,
   RoleLocalStorage,
+  UserId,
   baseUserUrl,
 } from "@src/utils/common";
 import { useNavigate } from "react-router-dom";
@@ -36,6 +37,7 @@ async function loginUser(values: FormFieldValue) {
     console.log("User logged in successfully:", data);
     localStorage.setItem(IsLoginLocalStorage, "true");
     localStorage.setItem(RoleLocalStorage, data.data.role);
+    localStorage.setItem(UserId, data.data._id);
   } catch (error) {
     console.error("Error logging in user:", error);
     localStorage.setItem(IsLoginLocalStorage, "false");
@@ -52,7 +54,7 @@ const LoginForm: React.FC = () => {
       if (localStorage.getItem(RoleLocalStorage) === "user")
         navigate("/booking");
       else if (localStorage.getItem(RoleLocalStorage) === "driver")
-        navigate("/driver");
+        navigate("/driver/DriverTrip");
       else if (localStorage.getItem(RoleLocalStorage) === "admin")
         navigate("/admin/manage");
   };

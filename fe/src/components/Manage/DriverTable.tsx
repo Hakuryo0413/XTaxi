@@ -53,6 +53,7 @@ const columns: TableProps<DataType>["columns"] = [
 
 const DriverTable: React.FC = () => {
   const [data, setData] = useState<DataType[]>([]);
+
   const fetchData = async () => {
     try {
       const response = await fetch(`${baseUserUrl}/all?role=driver`, {
