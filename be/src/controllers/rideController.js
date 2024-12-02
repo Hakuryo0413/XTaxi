@@ -5,7 +5,7 @@ const logger = require("../utils/logger")
 // @route POST /api/ride/
 exports.createRide = async (req, res) => {
   try {
-    const { user_id, pickup_location, dropoff_location, distance, start_time } = req.body;
+    let { user_id, pickup_location, dropoff_location, distance, start_time } = req.body;
 
     // Validate required fields
     if (!user_id || !pickup_location || !dropoff_location || !distance) {
@@ -14,12 +14,15 @@ exports.createRide = async (req, res) => {
         message: "All fields (user_id, pickup_location, dropoff_location, distance) are required.",
       });
     }
-    if (!start_time){
-      start_time = new Date()
+
+    // Set default start_time if not provided
+    if (!start_time) {
+      start_time = new Date();
     }
 
     // Calculate fare using the service
     const fare = calculateFare(distance);
+
     // Create ride
     const newRide = new Ride({
       user_id,
@@ -30,11 +33,12 @@ exports.createRide = async (req, res) => {
       fare,
     });
 
-    await newRide.save();
+    const savedRide = await newRide.save();
 
     return res.status(201).json({
       success: true,
       message: "Ride created successfully.",
+      ride_id: savedRide._id, 
     });
   } catch (error) {
     logger.error("Error creating ride:", error);
@@ -44,6 +48,7 @@ exports.createRide = async (req, res) => {
     });
   }
 };
+
 
 // Helper function to create a ride history entry
 const createRideHistory = async (ride, status, endTime, fare) => {
