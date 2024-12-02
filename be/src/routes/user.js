@@ -255,4 +255,45 @@ router.put('/update-profile', async (req, res) => {
   }
 });
 
+// @route   GET /api/driver/all
+// @desc    Get all drivers with their vehicles
+// @access  Private (Admin only)
+router.get("/all", async (req, res) => {
+  try {
+    // Lấy role từ query param
+    const { role } = req.query;
+
+    // Danh sách role hợp lệ
+    const validRoles = ["admin", "user", "driver"];
+
+    // Kiểm tra role có hợp lệ không
+    if (role && !validRoles.includes(role)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid role. Valid roles are: admin, user, driver",
+      });
+    }
+
+    // Tạo filter theo role (nếu có)
+    const filter = role ? { role } : {};
+
+    // Tìm kiếm users theo filter
+    const users = await User.find(filter)
+      .select("-password")
+      .populate("vehicle_info");
+
+    return res.status(200).json({
+      success: true,
+      data: users,
+      message: `Users with role ${role || "all"} fetched successfully`,
+    });
+  } catch (error) {
+    console.error("Fetch users error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+});
+
 module.exports = router;
