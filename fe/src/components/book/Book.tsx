@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./Book.css";
+import { useNavigate } from 'react-router-dom';
 import MapComponent from "./MapComponent";
 import imgTaxi1 from "@src/image/sedan10.png";
 import imgTaxi2 from "@src/image/van10.png";
@@ -21,6 +22,8 @@ const Book: React.FC = () => {
   const [pickupLocation, setPickupLocation] = useState<Location | null>(null); // Lưu thông tin điểm bắt đầu
   const [dropoffLocation, setDropoffLocation] = useState<Location | null>(null); // Lưu thông tin điểm kết thúc
   const [offers, setOffers] = useState(0);
+  const navigate = useNavigate();
+
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -122,6 +125,7 @@ const Book: React.FC = () => {
         setBookingStatus(
           `Ride successfully booked! Fare: ${fare.toLocaleString()}đ.`
         );
+        navigate("/payment");
       } else {
         setBookingStatus(
           `Failed to book ride: ${data.message || "Please try again."}`
