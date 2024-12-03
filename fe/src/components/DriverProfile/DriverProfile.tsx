@@ -68,6 +68,7 @@ const DriverProfile: React.FC = () => {
     role: 'Driver',
     name: 'John Doe',
     phone: '123-456-7890',
+    income: '21982389283',
     vehicle_type: 'Sedan',
   };
 
@@ -155,6 +156,10 @@ const DriverProfile: React.FC = () => {
                 profileData.phone
               )}
             </td>
+          </tr>
+          <tr>
+            <th>Income</th>
+            <td>{profileData.income}</td>
           </tr>
           <tr>
             <th>Vehicle Type</th>
