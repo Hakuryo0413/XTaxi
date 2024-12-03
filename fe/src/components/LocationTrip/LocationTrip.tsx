@@ -3,12 +3,16 @@ import { useLocation } from "react-router-dom";
 import L from "leaflet";
 import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import { Button } from "antd";
+import { baseRideUrl } from "@src/utils/common";
+import { Trip } from "../DriverTrip/DriverTrip";
 
 interface Location {
   address: string;
   lat: number;
   lng: number;
 }
+const driver_id = localStorage.getItem("user_id");
 
 const LocationTrip: React.FC = () => {
   const location = useLocation(); // Get location passed via state
@@ -16,6 +20,8 @@ const LocationTrip: React.FC = () => {
     lat: number;
     lng: number;
   } | null>(null);
+  const ride_id = localStorage.getItem("ride_id");
+  const [status, setStatus] = useState("accepted");
 
   useEffect(() => {
     // Get current location
@@ -75,9 +81,53 @@ const LocationTrip: React.FC = () => {
     return <div>Loading...</div>; // Wait for the current location to load
   }
 
+  const updateRideStatus = async (newStatus: string) => {
+    try {
+      const response = await fetch(`${baseRideUrl}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ride_id: ride_id,
+          driver_id: driver_id,
+          status: newStatus,
+        }),
+      });
+      console.log(response);
+      setStatus(newStatus);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  <div className="bg-primary flex justify-center pt-2">
+    <Button
+      type="primary"
+      onClick={() =>
+        updateRideStatus(status === "accepted" ? "in_progress" : "completed")
+      }
+    >
+      {status === "accepted" ? "In Progress" : "Complete"}
+    </Button>
+  </div>;
   return (
-    <div id="map" style={{ height: "100vh" }}>
-      {/* The map will be rendered inside this div */}
+    <div>
+      <div id="map" style={{ height: "100vh" }}>
+        {/* The map will be rendered inside this div */}
+      </div>
+      <div className="bg-primary flex justify-center pt-2">
+        <Button
+          type="primary"
+          onClick={() =>
+            updateRideStatus(
+              status === "accepted" ? "in_progress" : "completed"
+            )
+          }
+        >
+          {status === "accepted" ? "In Progress" : "Complete"}
+        </Button>
+      </div>
     </div>
   );
 };

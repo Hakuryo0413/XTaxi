@@ -5,20 +5,24 @@
 ---
 
 ## Create a New Ride
+
 `POST {{baseUrl}}/`
 
 ### Request
+
 **Headers:**
+
 - `Content-Type: application/json`
 
 **Request Body:**
+
 ```json
 {
   "user_id": "6741c9c5cbbb62a720962151",
   "pickup_location": {
     "address": "123 Pickup Street",
     "lat": 40.7128,
-    "lng": -74.0060
+    "lng": -74.006
   },
   "dropoff_location": {
     "address": "456 Dropoff Avenue",
@@ -31,6 +35,7 @@
 ```
 
 **Parameters:**
+
 - `user_id` (string, required): Unique identifier for the user requesting the ride
 - `pickup_location` (object, required): Details of the pickup location
   - `address` (string): Street address of pickup location
@@ -46,8 +51,10 @@
 ### Responses
 
 **Success Response:**
+
 - **Code:** 201 Created
-- **Content:** 
+- **Content:**
+
 ```json
 {
   "success": true,
@@ -58,7 +65,7 @@
     "pickup_location": {
       "address": "123 Pickup Street",
       "lat": 40.7128,
-      "lng": -74.0060
+      "lng": -74.006
     },
     "dropoff_location": {
       "address": "456 Dropoff Avenue",
@@ -67,14 +74,16 @@
     },
     "distance": 10.5,
     "start_time": "2024-12-01T08:00:00Z",
-    "fare": 25.50,
+    "fare": 25.5,
     "status": "created"
   }
 }
 ```
 
 **Error Responses:**
+
 - **Code:** 400 Bad Request
+
 ```json
 {
   "success": false,
@@ -83,6 +92,7 @@
 ```
 
 - **Code:** 500 Internal Server Error
+
 ```json
 {
   "success": false,
@@ -93,13 +103,17 @@
 ---
 
 ## Update Ride Status
-`PUT {{baseUrl}}/status`
+
+`PUT {{baseUrl}}`
 
 ### Request
+
 **Headers:**
+
 - `Content-Type: application/json`
 
 **Request Body:**
+
 ```json
 {
   "ride_id": "674c62a04cb8d68a1843030f",
@@ -109,16 +123,19 @@
 ```
 
 **Parameters:**
+
 - `ride_id` (string, required): Unique identifier of the ride
 - `driver_id` (string, required): Unique identifier of the driver
-- `status` (string, required): New status of the ride 
+- `status` (string, required): New status of the ride
   - Possible values: `created`, `pending`, `accepted`, `in_progress`, `completed`, `cancelled`
 
 ### Responses
 
 **Success Response:**
+
 - **Code:** 200 OK
 - **Content:**
+
 ```json
 {
   "success": true,
@@ -133,7 +150,9 @@
 ```
 
 **Error Responses:**
+
 - **Code:** 400 Bad Request
+
 ```json
 {
   "success": false,
@@ -142,6 +161,7 @@
 ```
 
 - **Code:** 404 Not Found
+
 ```json
 {
   "success": false,
@@ -150,6 +170,7 @@
 ```
 
 - **Code:** 500 Internal Server Error
+
 ```json
 {
   "success": false,
@@ -160,13 +181,17 @@
 ---
 
 ## Get Requested Rides
+
 `GET {{baseUrl}}/requested`
 
 ### Request
+
 **Headers:**
+
 - `Content-Type: application/json`
 
 **Query Parameters:**
+
 - `driver_id` (string, optional): Filter rides for a specific driver
 - `status` (string, optional): Filter rides by specific status
   - Possible values: `created`, `pending`, `accepted`, `in_progress`
@@ -174,8 +199,10 @@
 ### Responses
 
 **Success Response:**
+
 - **Code:** 200 OK
 - **Content:**
+
 ```json
 {
   "success": true,
@@ -187,7 +214,7 @@
       "pickup_location": {
         "address": "123 Pickup Street",
         "lat": 40.7128,
-        "lng": -74.0060
+        "lng": -74.006
       },
       "dropoff_location": {
         "address": "456 Dropoff Avenue",
@@ -196,7 +223,7 @@
       },
       "distance": 10.5,
       "start_time": "2024-12-01T08:00:00Z",
-      "fare": 25.50,
+      "fare": 25.5,
       "status": "pending",
       "created_at": "2024-02-15T10:25:30Z"
     }
@@ -205,7 +232,9 @@
 ```
 
 **Error Responses:**
+
 - **Code:** 400 Bad Request
+
 ```json
 {
   "success": false,
@@ -214,6 +243,7 @@
 ```
 
 - **Code:** 404 Not Found
+
 ```json
 {
   "success": false,
@@ -222,6 +252,7 @@
 ```
 
 - **Code:** 500 Internal Server Error
+
 ```json
 {
   "success": false,
@@ -230,6 +261,7 @@
 ```
 
 ## Notes on Ride Statuses
+
 - `created`: Ride has been initially created by the user
 - `pending`: Ride is awaiting driver assignment
 - `accepted`: Driver has accepted the ride

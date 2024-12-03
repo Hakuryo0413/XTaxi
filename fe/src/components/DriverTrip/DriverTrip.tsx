@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./DriverTrip.css";
-import { baseRideUrl } from "@src/utils/common";
+import { RideId, baseRideUrl } from "@src/utils/common";
 
 const driver_id = localStorage.getItem("user_id");
 
@@ -10,14 +10,6 @@ interface Location {
   lat: number;
   lng: number;
 }
-
-// interface Trip {
-//   id: number;
-//   name: string;
-//   phone: string;
-//   location: Location; // Updated to use the Location type
-//   status: string; // e.g., "accepted", "completed", etc.
-// }
 
 interface User {
   location: {
@@ -38,7 +30,7 @@ interface User {
   __v: number;
 }
 
-interface Trip {
+export interface Trip {
   pickup_location: Location;
   dropoff_location: Location;
   _id: string;
@@ -51,33 +43,8 @@ interface Trip {
   updated_at: string;
   __v: number;
 }
-// const initialTrips: Trip[] = [
-//   {
-//     id: 1,
-//     name: "Nguyen Van A",
-//     phone: "045878415545",
-//     location: {
-//       address: "Hà Nội",
-//       lat: 21.028511,
-//       lng: 105.804817,
-//     },
-//     status: "requested",
-//   },
-//   {
-//     id: 2,
-//     name: "Sevan",
-//     phone: "045878488885",
-//     location: {
-//       address: "YB Airport",
-//       lat: 10.823099,
-//       lng: 106.629662,
-//     },
-//     status: "requested",
-//   },
-//   // Add more trips as needed
-// ];
+
 const DriverTrip: React.FC = () => {
-  // const [trips, setTrips] = useState<Trip[]>(initialTrips);
   const [trips, setTrips] = useState<Trip[]>([]);
   const navigate = useNavigate();
 
@@ -108,37 +75,35 @@ const DriverTrip: React.FC = () => {
     }); // Pass location to LocationMap
   };
 
-  // const handleStatus = async (trip: Trip) => {
-  //   try {
-  //     const response = await fetch(`${baseRideUrl}/status`, {
-  //       method: "PUT",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         ride_id: trip._id,
-  //         driver_id: driver_id,
-  //         status: "accepted",
-  //       }),
-  //     });
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
+  const handleStatus = async (trip: Trip) => {
+    try {
+      const response = await fetch(`${baseRideUrl}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ride_id: trip._id,
+          driver_id: driver_id,
+          status: "accepted",
+        }),
+      });
+      console.log(response);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   // Handle status update
   const handleAccept = (id: string) => {
-    setTrips((prevTrips) =>
-      prevTrips.map((trip) =>
-        trip._id === id ? { ...trip, status: "accepted" } : trip
-      )
-    );
+    handleStatus(trips.find((trip) => trip._id === id)!);
+    localStorage.setItem(RideId, id);
   };
 
   useEffect(() => {
     fetchData();
     console.log(trips);
-  }, []);
+  }, [trips]);
 
   return (
     <div className="history-trip-container">
@@ -164,7 +129,10 @@ const DriverTrip: React.FC = () => {
                   <>
                     <button
                       className="accept-button"
-                      onClick={() => handleAccept(trip._id)}
+                      onClick={() => {
+                        handleAccept(trip._id);
+                        handleLocation(trip);
+                      }}
                     >
                       Accept
                     </button>
