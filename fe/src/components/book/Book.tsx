@@ -42,6 +42,10 @@ const Book: React.FC = () => {
       newPickupLocation: Location,
       newDropoffLocation: Location
     ) => {
+      console.log("Distance:", newDistance);
+      console.log("Pickup:", newPickupLocation);
+      console.log("Dropoff:", newDropoffLocation);
+
       setDistance(newDistance);
       setPickupLocation(newPickupLocation);
       setDropoffLocation(newDropoffLocation);

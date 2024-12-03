@@ -68,42 +68,42 @@ const MapComponent: React.FC<MapComponentProps> = React.memo(
         }).addTo(map);
 
         // Tọa độ pickup và dropoff
-        const pickupLatLng = L.latLng(currentLocation.lat, currentLocation.lng); // Hà Nội
-        const dropoffLatLng = L.latLng(21.036985, 105.782062); // Một địa điểm khác
-
-        // Thêm tính năng chỉ đường
         const routingControl = L.Routing.control({
-          waypoints: [pickupLatLng, dropoffLatLng],
+          waypoints: [
+            L.latLng(currentLocation.lat, currentLocation.lng),
+            L.latLng(21.036985, 105.782062),
+          ],
           routeWhileDragging: true,
           geocoder: L.Control.Geocoder.nominatim(),
           serviceUrl: "https://router.project-osrm.org/route/v1/",
-        }).addTo(map);
-
-        // Lắng nghe sự kiện khi tìm thấy tuyến đường
+        });
+    
         routingControl.on("routesfound", async (e) => {
-          const route = e.routes[0]; // Tuyến đường đầu tiên
-          const totalDistance = route.summary.totalDistance; // Tổng quãng đường (mét)
-
-          // Reverse geocoding để lấy địa chỉ
+          const route = e.routes[0];
+          const totalDistance = route.summary.totalDistance;
+    
+          const pickupLatLng = routingControl.getWaypoints()[0].latLng;
+          const dropoffLatLng = routingControl.getWaypoints()[1].latLng;
+    
           const pickupAddress = await reverseGeocode(pickupLatLng);
           const dropoffAddress = await reverseGeocode(dropoffLatLng);
-
+    
           const pickupLocation: Location = {
             address: pickupAddress,
             lat: pickupLatLng.lat,
             lng: pickupLatLng.lng,
           };
-
+    
           const dropoffLocation: Location = {
             address: dropoffAddress,
             lat: dropoffLatLng.lat,
             lng: dropoffLatLng.lng,
           };
-
-          // Gửi quãng đường và thông tin địa lý về component cha
+    
           onDistanceChange(totalDistance, pickupLocation, dropoffLocation);
         });
 
+        routingControl.addTo(mapInstanceRef.current);
         // Nút dễ dàng điều chỉnh điểm bắt đầu
         L.easyButton(
           "fa-car",
@@ -129,6 +129,8 @@ const MapComponent: React.FC<MapComponentProps> = React.memo(
     const reverseGeocode = async (latLng: L.LatLng): Promise<string> => {
       const response = await fetch(
         `https://nominatim.openstreetmap.org/reverse?lat=${latLng.lat}&lon=${latLng.lng}&format=json`
+        //'https://api.tomtom.com/search/2/reverseGeocode/${latLng.lat},${latLng.lng}.json?key=${7f3JGEevFUfR7Og8SvonyvJym2HAzhFF}'
+        //'https://tmdt.fimo.edu.vn/nominatim/reverse?lat=${latLng.lat}&lon=${latLng.lng}&format=json'
       );
       const data = await response.json();
       return data.display_name || "Unknown address";
