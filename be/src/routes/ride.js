@@ -19,5 +19,6 @@ router.put("/", rideController.updateRide)
  * @route GET /api/ride/
  */
 router.get("/requested", rideController.getRequestedRides);
+router.get("/income", rideController.getIncome);
 
 module.exports = router;

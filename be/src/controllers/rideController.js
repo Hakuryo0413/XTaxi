@@ -1,17 +1,19 @@
 const Ride = require("../models/ride");
-const logger = require("../utils/logger")
+const logger = require("../utils/logger");
 
 // @desc Create a new ride
 // @route POST /api/ride/
 exports.createRide = async (req, res) => {
   try {
-    let { user_id, pickup_location, dropoff_location, distance, start_time } = req.body;
+    let { user_id, pickup_location, dropoff_location, distance, start_time } =
+      req.body;
 
     // Validate required fields
     if (!user_id || !pickup_location || !dropoff_location || !distance) {
       return res.status(400).json({
         success: false,
-        message: "All fields (user_id, pickup_location, dropoff_location, distance) are required.",
+        message:
+          "All fields (user_id, pickup_location, dropoff_location, distance) are required.",
       });
     }
 
@@ -38,7 +40,7 @@ exports.createRide = async (req, res) => {
     return res.status(201).json({
       success: true,
       message: "Ride created successfully.",
-      ride_id: savedRide._id, 
+      ride_id: savedRide._id,
     });
   } catch (error) {
     logger.error("Error creating ride:", error);
@@ -48,7 +50,6 @@ exports.createRide = async (req, res) => {
     });
   }
 };
-
 
 // Helper function to create a ride history entry
 const createRideHistory = async (ride, status, endTime, fare) => {
@@ -84,16 +85,17 @@ const updateRideStatus = async (ride, status, fare) => {
  * @returns {number} - Calculated fare
  */
 const calculateFare = (distance) => {
-    const baseFare = 50; // Base fare
-    const perKmRate = 10; // Cost per kilometer
-    return baseFare + perKmRate * distance;
-  };
+  const baseFare = 50; // Base fare
+  const perKmRate = 10; // Cost per kilometer
+  return baseFare + perKmRate * distance;
+};
 
 // @desc Update ride data
 // @route PUT /api/ride/
 exports.updateRide = async (req, res) => {
   try {
-    const { ride_id, driver_id, status, user_rating, driver_feedback, fare } = req.body;
+    const { ride_id, driver_id, status, user_rating, driver_feedback, fare } =
+      req.body;
 
     // Validate ride_id
     if (!ride_id) {
@@ -158,38 +160,91 @@ exports.updateRide = async (req, res) => {
  * @path GET /api/ride/
  */
 exports.getRequestedRides = async (req, res) => {
-    try {
-      // Query rides with status "requested"
-      const rides = await Ride.find({ status: "requested" }).populate("user_id driver_id");
-  
-      // If no rides found
-      if (!rides || rides.length === 0) {
-        return res.status(404).json({
-          success: false,
-          message: "No requested rides found.",
-        });
-      }
-  
-      // Return the rides
-      return res.status(200).json({
-        success: true,
-        rides,
-      });
-    } catch (error) {
-      logger.error("Error fetching requested rides:", error);
-      return res.status(500).json({
+  try {
+    // Query rides with status "requested"
+    const rides = await Ride.find({ status: "requested" }).populate(
+      "user_id driver_id"
+    );
+
+    // If no rides found
+    if (!rides || rides.length === 0) {
+      return res.status(404).json({
         success: false,
-        message: "Internal server error.",
+        message: "No requested rides found.",
       });
     }
-  };
 
+    // Return the rides
+    return res.status(200).json({
+      success: true,
+      rides,
+    });
+  } catch (error) {
+    logger.error("Error fetching requested rides:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error.",
+    });
+  }
+};
+exports.getIncome = async (req, res) => {
+  try {
+    const { driver_id, start_date, end_date } = req.query;
+
+    let filter = { status: "completed" };
+
+    if (driver_id) {
+      filter.driver_id = new mongoose.Types.ObjectId(driver_id);
+    }
+
+    if (start_date) {
+      const startDate = new Date(start_date);
+      filter.start_time = { $gte: startDate };
+    }
+
+    if (end_date) {
+      const endDate = new Date(end_date);
+      if (!filter.start_time) {
+        filter.start_time = {};
+      }
+      filter.start_time.$lte = endDate;
+    }
+
+    const rides = await Ride.aggregate([
+      { $match: filter },
+      {
+        $group: {
+          _id: "$driver_id",
+          income: { $sum: "$fare" },
+        },
+      },
+      {
+        $project: {
+          driver_id: "$_id",
+          income: 1,
+          _id: 0,
+        },
+      },
+    ]);
+
+    return res.status(200).json({
+      success: true,
+      data: rides,
+    });
+  } catch (error) {
+    console.error("Error fetching income data:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error.",
+    });
+  }
+};
 // /**
-//  * 
+//  *
 //  * @description update response of driver
-//  * @param {*} req 
-//  * @param {*} res 
-//  * @returns 
+//  * @param {*} req
+//  * @param {*} res
+//  * @returns
 //  */
 // exports.driverResponse = async (req, res) => {
 //   try {
@@ -226,7 +281,7 @@ exports.getRequestedRides = async (req, res) => {
 //         message: "Ride accepted.",
 //       });
 //     } else if (response === "reject") {
-//       // Process for reject driver 
+//       // Process for reject driver
 
 //       //NOT await, find driver work as back-ground process
 //       rideService.findDriver(ride_id, ride.pickup_location)
