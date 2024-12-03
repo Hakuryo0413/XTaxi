@@ -103,10 +103,7 @@ const UserHeader = () => {
                                 "block px-4 py-2 text-sm hover:opacity-50"
                               )}
                               onClick={() => {
-                                localStorage.setItem(
-                                  IsLoginLocalStorage,
-                                  "false"
-                                );
+                                localStorage.clear();
                               }}
                             >
                               Log out

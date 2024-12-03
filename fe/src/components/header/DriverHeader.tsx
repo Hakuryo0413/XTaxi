@@ -77,10 +77,8 @@ const DriverHeader = () => {
                   </div>
                   <Link to={"/"}>
                     <Button
-                      // type="text"
-                      // className="text-white"
                       onClick={() => {
-                        localStorage.setItem(IsLoginLocalStorage, "false");
+                        localStorage.clear();
                       }}
                     >
                       Logout
