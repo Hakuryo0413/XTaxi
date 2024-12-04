@@ -260,6 +260,51 @@
 }
 ```
 
+## Get Ride by ID
+
+`GET {{baseUrl}}/{ride_id}`
+
+### Request
+
+**Headers:**
+
+- `Content-Type: application/json`
+
+**Parameters:**
+
+- `ride_id` (string, required): Unique identifier of the ride
+
+### Example Request
+
+```http
+GET http://localhost:3000/ride/674c62a04cb8d68a1843030f
+```
+
+### Example Response
+
+```json
+{
+  "ride_id": "674c62a04cb8d68a1843030f",
+  "user_id": "6741c9c5cbbb62a720962151",
+  "pickup_location": {
+    "address": "123 Pickup Street",
+    "lat": 40.7128,
+    "lng": -74.006
+  },
+  "dropoff_location": {
+    "address": "456 Dropoff Avenue",
+    "lat": 40.73061,
+    "lng": -73.935242
+  },
+  "distance": 10.5,
+  "start_time": "2024-12-01T08:00:00Z",
+  "status": "requested",
+  "fare": 155,
+  "created_at": "2024-12-01T13:25:24.772Z",
+  "updated_at": "2024-12-01T13:25:24.772Z"
+}
+```
+
 ## Notes on Ride Statuses
 
 - `created`: Ride has been initially created by the user

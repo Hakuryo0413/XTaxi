@@ -1,5 +1,5 @@
 import React from "react";
-import { Radio, Image } from "antd";
+import { Radio, Image, Button } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 import ManageConfigProvider from "@src/components/Manage/ManageConfigProvider";
 import Momo from "@src/assets/momo_square";
@@ -51,6 +51,9 @@ const Payment: React.FC = () => {
             </div>
 
             <RightOutlined className="text-white" />
+          </div>
+          <div className="mt-4 justify-end flex">
+            <Button>Pay</Button>
           </div>
         </div>
       </div>

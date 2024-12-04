@@ -70,8 +70,10 @@ const DriverTrip: React.FC = () => {
 
   // Handle location redirection
   const handleLocation = (trip: Trip) => {
+    localStorage.setItem(RideId, trip._id);
+
     navigate("/driver/locationTrip", {
-      state: { location: trip.pickup_location },
+      state: { pickup: trip.pickup_location, dropoff: trip.dropoff_location },
     }); // Pass location to LocationMap
   };
 
@@ -95,15 +97,14 @@ const DriverTrip: React.FC = () => {
   };
 
   // Handle status update
-  const handleAccept = (id: string) => {
-    handleStatus(trips.find((trip) => trip._id === id)!);
+  const handleAccept = async (id: string) => {
     localStorage.setItem(RideId, id);
+    await handleStatus(trips.find((trip) => trip._id === id)!);
   };
 
   useEffect(() => {
     fetchData();
-    console.log(trips);
-  }, [trips]);
+  }, []);
 
   return (
     <div className="history-trip-container">

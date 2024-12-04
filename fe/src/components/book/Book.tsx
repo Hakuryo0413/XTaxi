@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./Book.css";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import MapComponent from "./MapComponent";
 import imgTaxi1 from "@src/image/sedan10.png";
 import imgTaxi2 from "@src/image/van10.png";
 import { Offers } from "../Payment";
+import { UserId } from "@src/utils/common";
 
 type Location = {
   address: string;
@@ -12,7 +13,7 @@ type Location = {
   lng: number;
 };
 
-const user_id = localStorage.getItem("user_id");
+const user_id = localStorage.getItem(UserId);
 
 const Book: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,7 +25,7 @@ const Book: React.FC = () => {
   const [offers, setOffers] = useState(0);
   const navigate = useNavigate();
 
-
+  
   const showModal = () => {
     setIsModalOpen(true);
   };

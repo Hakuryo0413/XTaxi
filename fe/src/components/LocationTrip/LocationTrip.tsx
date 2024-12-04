@@ -1,27 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import L from "leaflet";
-import { MapContainer, TileLayer } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
 import { Button } from "antd";
-import { baseRideUrl } from "@src/utils/common";
+import { RideId, UserId, baseRideUrl } from "@src/utils/common";
 import { Trip } from "../DriverTrip/DriverTrip";
+import "leaflet/dist/leaflet.css";
 
-interface Location {
-  address: string;
-  lat: number;
-  lng: number;
-}
-const driver_id = localStorage.getItem("user_id");
+const driver_id = localStorage.getItem(UserId);
+const ride_id = localStorage.getItem(RideId);
 
 const LocationTrip: React.FC = () => {
-  const location = useLocation(); // Get location passed via state
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const [currentLocation, setCurrentLocation] = useState<{
     lat: number;
     lng: number;
   } | null>(null);
-  const ride_id = localStorage.getItem("ride_id");
-  const [status, setStatus] = useState("accepted");
+  const [rideInfo, setRideInfo] = useState<Trip | null>(null);
+
+  // Get ride info
+  const getRide = async () => {
+    try {
+      const response = await fetch(`${baseRideUrl}/${ride_id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      await setRideInfo(data?.ride);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   useEffect(() => {
     // Get current location
@@ -34,6 +46,7 @@ const LocationTrip: React.FC = () => {
         console.error("Error fetching current location:", error);
       }
     );
+    getRide();
   }, []);
 
   useEffect(() => {
@@ -60,16 +73,19 @@ const LocationTrip: React.FC = () => {
         defaultMarkGeocode: true,
       }).addTo(map);
 
-      // Tọa độ pickup và dropoff
-      const pickupLatLng = L.latLng(currentLocation.lat, currentLocation.lng); // Current location
+      const currentLatLng = L.latLng(currentLocation.lat, currentLocation.lng);
+      const pickupLatLng = L.latLng(
+        location.state.pickup.lat,
+        location.state.pickup.lng
+      );
       const dropoffLatLng = L.latLng(
-        location.state.location.lat,
-        location.state.location.lng
-      ); // Destination from LocationDriver
+        location.state.dropoff.lat,
+        location.state.dropoff.lng
+      );
 
       // Thêm tính năng chỉ đường
       const routingControl = L.Routing.control({
-        waypoints: [pickupLatLng, dropoffLatLng],
+        waypoints: [currentLatLng, pickupLatLng, pickupLatLng, dropoffLatLng],
         routeWhileDragging: true,
         geocoder: L.Control.Geocoder.nominatim(),
         serviceUrl: "https://router.project-osrm.org/route/v1/",
@@ -94,39 +110,35 @@ const LocationTrip: React.FC = () => {
           status: newStatus,
         }),
       });
-      console.log(response);
-      setStatus(newStatus);
+      getRide();
+      if (newStatus === "completed") {
+        navigate("/driver/DriverTrip");
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
-  <div className="bg-primary flex justify-center pt-2">
-    <Button
-      type="primary"
-      onClick={() =>
-        updateRideStatus(status === "accepted" ? "in_progress" : "completed")
-      }
-    >
-      {status === "accepted" ? "In Progress" : "Complete"}
-    </Button>
-  </div>;
+  if (!currentLocation) {
+    return <div>Loading...</div>; // Wait for the current location to load
+  }
+
   return (
     <div>
-      <div id="map" style={{ height: "100vh" }}>
-        {/* The map will be rendered inside this div */}
-      </div>
+      <div id="map" style={{ height: "100vh" }}></div>
       <div className="bg-primary flex justify-center pt-2">
-        <Button
-          type="primary"
-          onClick={() =>
-            updateRideStatus(
-              status === "accepted" ? "in_progress" : "completed"
-            )
-          }
-        >
-          {status === "accepted" ? "In Progress" : "Complete"}
-        </Button>
+        {rideInfo?.status !== "requested" && (
+          <Button
+            type="primary"
+            onClick={() =>
+              updateRideStatus(
+                rideInfo?.status === "accepted" ? "in_progress" : "completed"
+              )
+            }
+          >
+            {rideInfo?.status === "accepted" ? "In Progress" : "Complete"}
+          </Button>
+        )}
       </div>
     </div>
   );
