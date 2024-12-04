@@ -38,7 +38,9 @@
     background-color: #f1f1f1;
   }
   
-  .pay-button {
+  .pay-button,
+.pay-button1,
+.accept-button {
     padding: 6px 20px;
     background-color: #4caf50;
     color: white;
@@ -46,21 +48,20 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-  }
-  
-  .pay-button, .accept-button:hover {
-    background-color: #45a049;
-  }
+    margin-right: 10px; /* Thêm khoảng cách giữa các nút */
+}
 
-  .accept-button {
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    font-weight: bold;
-    padding: 5px 20px;
-    margin-right: 20px;
-    cursor: pointer;
-  }
+.pay-button:hover,
+.pay-button1:hover,
+.accept-button:hover {
+    background-color: #45a049; /* Màu khi hover */
+}
+
+/* Nếu nút cuối không cần khoảng cách */
+.accept-button:last-child {
+    margin-right: 0;
+}
+
   
   
   @media (max-width: 768px) {
@@ -91,7 +92,7 @@
     padding: 6px;
   }
   
-  .pay-button, .accept-button {
+  .pay-button, .accept-button, .pay-button1{
     padding: 4px 8px;
     font-size: 12px;
   }

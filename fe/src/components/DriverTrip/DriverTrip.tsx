@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./DriverTrip.css";
 import { RideId, baseRideUrl } from "@src/utils/common";
+import axios from 'axios';
 
 const driver_id = localStorage.getItem("user_id");
 
@@ -48,6 +49,7 @@ const DriverTrip: React.FC = () => {
   const [trips, setTrips] = useState<Trip[]>([]);
   const navigate = useNavigate();
 
+  // Fetch trips data
   const fetchData = async () => {
     try {
       const response = await fetch(`${baseRideUrl}/requested`, {
@@ -71,12 +73,12 @@ const DriverTrip: React.FC = () => {
   // Handle location redirection
   const handleLocation = (trip: Trip) => {
     localStorage.setItem(RideId, trip._id);
-
     navigate("/driver/locationTrip", {
       state: { pickup: trip.pickup_location, dropoff: trip.dropoff_location },
-    }); // Pass location to LocationMap
+    });
   };
 
+  // Update status of the trip (accept the ride)
   const handleStatus = async (trip: Trip) => {
     try {
       const response = await fetch(`${baseRideUrl}`, {
@@ -92,7 +94,7 @@ const DriverTrip: React.FC = () => {
       });
       console.log(response);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error updating status:", error);
     }
   };
 
@@ -100,6 +102,37 @@ const DriverTrip: React.FC = () => {
   const handleAccept = async (id: string) => {
     localStorage.setItem(RideId, id);
     await handleStatus(trips.find((trip) => trip._id === id)!);
+  };
+
+  // Handle accept trip and create chat
+  const handleChat = async (id: string) => {
+    const trip = trips.find((trip) => trip._id === id);
+    if (!trip) return;
+
+    // Update ride status to accepted
+
+    // Save RideId to localStorage
+
+    // Create chat between driver and user
+    try {
+      const response = await axios.post('http://localhost:3000/chat/', {
+        user_id: trip.user_id._id,
+        driver_id: driver_id,
+      });
+
+      if (response.data.success) {
+        // Save chatId to localStorage if chat is created successfully
+        const chat = response.data.chat;
+        localStorage.setItem('chatId', chat._id);
+
+        // Navigate to chat page
+        navigate(`/chat/${chat._id}`);
+      } else {
+        console.error('Failed to create chat');
+      }
+    } catch (error) {
+      console.error('Error creating chat:', error);
+    }
   };
 
   useEffect(() => {
@@ -126,14 +159,12 @@ const DriverTrip: React.FC = () => {
               <td>{trip.pickup_location.address}</td>
               <td>{trip.status}</td>
               <td>
+              <div class="button-container">
                 {trip.status === "requested" ? (
                   <>
                     <button
                       className="accept-button"
-                      onClick={() => {
-                        handleAccept(trip._id);
-                        handleLocation(trip);
-                      }}
+                      onClick={() => handleAccept(trip._id)}
                     >
                       Accept
                     </button>
@@ -147,6 +178,13 @@ const DriverTrip: React.FC = () => {
                 >
                   Location
                 </button>
+                <button
+                  className="pay-button1"
+                  onClick={() => handleChat(trip._id)}
+                >
+                  Chat
+                </button>
+                </div>
               </td>
             </tr>
           ))}

@@ -17,6 +17,7 @@ const navigation = [
   { name: "About", href: "/about", current: false },
   { name: "Driver", href: "/LocationDriver", current: false },
   { name: "Feedback", href: "/DriverFeedback", current: false },
+  { name: "CustomerCare", href: "/CustomerCare", current: false },
   { name: "Profile", href: "/Profile", current: false },
 ];
 

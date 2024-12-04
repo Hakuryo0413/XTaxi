@@ -34,6 +34,7 @@ function UserRouter() {
         <Route path="/LocationMap" element={<LocationMapPage />} />
         <Route path="/Profile" element={<UserProfilePage />} />
         <Route path="/DriverFeedback" element={<DriverFeedbackPage />} />
+        <Route path="/CustomerCare" element={<CustomercarePage />} />
       </Routes>
     </div>
   );
