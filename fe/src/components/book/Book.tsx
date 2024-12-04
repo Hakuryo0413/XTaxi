@@ -25,7 +25,6 @@ const Book: React.FC = () => {
   const [offers, setOffers] = useState(0);
   const navigate = useNavigate();
 
-  
   const showModal = () => {
     setIsModalOpen(true);
   };

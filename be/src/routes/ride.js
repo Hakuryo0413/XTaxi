@@ -3,7 +3,6 @@ const router = express.Router();
 
 const rideController = require("../controllers/rideController.js");
 
-
 //@route POST api/ride/
 //@desc post ride data
 //@access

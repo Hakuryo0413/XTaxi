@@ -63,12 +63,12 @@ const ButtonContainer = styled.div`
 
 const UserProfile: React.FC = () => {
   const initialProfileData = {
-    username: 'user123',
-    password: '********',
+    username: 'sang123',
+    password: '123',
     role: 'User',
-    name: 'John Doe',
-    phone: '123-456-7890',
-    email: 'Sedan@gmail.com',
+    name: 'Minh Sang Do',
+    phone: '09826286828',
+    email: 'SangDo@gmail.com',
   };
 
   const [profileData, setProfileData] = useState(initialProfileData);

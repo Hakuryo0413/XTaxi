@@ -19,26 +19,15 @@ interface Trip {
 const initialTrips: Trip[] = [
   {
     id: 1,
-    name: 'Nguyen Van A',
-    phone: '045878415545',
+    name: 'Thanh Tung Hoang',
+    phone: '09863898686',
     location: {
       address: 'Hà Nội',
       lat: 21.028511,
       lng: 105.804817,
     },
     status: 'accepted',
-  },
-  {
-    id: 2,
-    name: 'Sevan',
-    phone: '045878488885',
-    location: {
-      address: 'YB Airport',
-      lat: 10.823099,
-      lng: 106.629662,
-    },
-    status: 'accepted',
-  },
+  }
   // Add more trips as needed
 ];
 

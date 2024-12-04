@@ -15,6 +15,8 @@ const navigationGuest = [
 const navigation = [
   { name: "Book", href: "/booking", current: false },
   { name: "About", href: "/about", current: false },
+  { name: "Driver", href: "/LocationDriver", current: false },
+  { name: "Feedback", href: "/DriverFeedback", current: false },
   { name: "Profile", href: "/Profile", current: false },
 ];
 
@@ -127,7 +129,7 @@ const UserHeader = () => {
                                 "block px-4 py-2 text-sm hover:opacity-50"
                               )}
                               onClick={() => {
-                                localStorage.setItem(IsLoginLocalStorage, "false");
+                                localStorage.clear();
                               }}
                             >
                               Log out
