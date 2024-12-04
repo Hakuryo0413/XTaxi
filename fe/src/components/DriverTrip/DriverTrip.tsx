@@ -164,8 +164,11 @@ const DriverTrip: React.FC = () => {
                   <>
                     <button
                       className="accept-button"
-                      onClick={() => handleAccept(trip._id)}
-                    >
+                      onClick={() => {
+                        handleAccept(trip._id);
+                        handleLocation(trip);
+                      }}
+                      >
                       Accept
                     </button>
                   </>
