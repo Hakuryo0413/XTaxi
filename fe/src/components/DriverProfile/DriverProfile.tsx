@@ -63,12 +63,12 @@ const ButtonContainer = styled.div`
 
 const DriverProfile: React.FC = () => {
   const initialProfileData = {
-    username: 'driver123',
-    password: '********',
+    username: 'tung123',
+    password: '123',
     role: 'Driver',
-    name: 'John Doe',
-    phone: '123-456-7890',
-    income: '21982389283',
+    name: 'Thanh Tung Hoang',
+    phone: '09863898686',
+    income: '0',
     vehicle_type: 'Sedan',
   };
 

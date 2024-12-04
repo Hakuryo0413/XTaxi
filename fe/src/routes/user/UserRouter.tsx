@@ -8,6 +8,7 @@ import {
   HistoryTripPage,
   LocationDriverPage,
   UserProfilePage,
+  DriverFeedbackPage,
 } from "@src/pages/user";
 import LocationMapPage from "@src/pages/user/LocationMapPage";
 
@@ -30,6 +31,7 @@ function UserRouter() {
         <Route path="/LocationDriver" element={<LocationDriverPage />} />
         <Route path="/LocationMap" element={<LocationMapPage />} />
         <Route path="/Profile" element={<UserProfilePage />} />
+        <Route path="/DriverFeedback" element={<DriverFeedbackPage />} />
       </Routes>
     </div>
   );
