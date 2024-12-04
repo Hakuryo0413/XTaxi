@@ -1,6 +1,7 @@
 import AboutPage from "@src/pages/about/AboutPage";
 import BookPage from "@src/pages/book/BookPage";
 import HomePage from "@src/pages/home/HomePage";
+import CustomercarePage from "@src/pages/customercare/customercarePage";
 import {
   LoginPage,
   RegisterPage,
@@ -14,6 +15,7 @@ import LocationMapPage from "@src/pages/user/LocationMapPage";
 
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+
 function UserRouter() {
   return (
     <div>

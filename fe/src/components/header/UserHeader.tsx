@@ -1,8 +1,7 @@
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import React from "react";
-import { Fragment } from "react";
-import { Link } from "react-router-dom";
+import React, { Fragment, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import { Image } from "antd";
 import { IsLoginLocalStorage } from "@src/utils/common";
 
@@ -20,12 +19,38 @@ const navigation = [
   { name: "Feedback", href: "/DriverFeedback", current: false },
   { name: "Profile", href: "/Profile", current: false },
 ];
+
+// Hàm tạo classNames cho các mục trong navigation
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
 const UserHeader = () => {
   const isLogin = localStorage.getItem(IsLoginLocalStorage) === "true";
+
+  // Lấy chatId từ localStorage
+  const chatId = localStorage.getItem('chatId'); 
+
+  // Khởi tạo hook navigate để điều hướng
+  const navigate = useNavigate();
+
+  // Tạo đường dẫn Go to Chat nếu có chatId
+  const goToChatUrl = chatId ? `/chat/${chatId}` : "/chat"; // Nếu có chatId thì dẫn đến trang chat cụ thể
+
+  // Kiểm tra nếu người dùng đã đăng nhập và có chatId, thêm mục "Go to Chat"
+  const [navigationWithChat, setNavigationWithChat] = useState(navigation);
+
+  useEffect(() => {
+    if (isLogin && chatId) {
+      setNavigationWithChat([
+        ...navigation,
+        { name: "Go to Chat", href: goToChatUrl, current: false },
+      ]);
+    } else {
+      setNavigationWithChat(navigation); // Giữ nguyên navigation nếu không có chatId
+    }
+  }, [isLogin, chatId]);
+
   return (
     <Disclosure as="nav" className="bg-primary z-50">
       {({ open }) => (
@@ -39,11 +64,11 @@ const UserHeader = () => {
               />
 
               <div className="flex-1 justify-center items-center hidden lg:flex">
-                <div className="flex space-x-4 ">
-                  {(isLogin ? navigation : navigationGuest).map((item) => (
-                    <a
+                <div className="flex space-x-4">
+                  {(isLogin ? navigationWithChat : navigationGuest).map((item) => (
+                    <Link
                       key={item.name}
-                      href={item.href}
+                      to={item.href} // Sử dụng Link thay vì <a> để chuyển hướng mà không reload trang
                       className={classNames(
                         "text-light-blue hover:text-currentText",
                         "rounded-lg px-3 py-2 text-xl font-medium"
@@ -51,14 +76,14 @@ const UserHeader = () => {
                       aria-current={item.current ? "page" : undefined}
                     >
                       {item.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>
 
               <div className="absolute right-0 flex lg:relative lg:block">
                 <div className="flex lg:hidden">
-                  {/* Nút mở navigation đối với điện thoại*/}
+                  {/* Nút mở navigation đối với điện thoại */}
                   <Disclosure.Button className="flex float-right items-center rounded-lg p-2 text-white hover:bg-white hover:bg-opacity-30 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
@@ -71,7 +96,7 @@ const UserHeader = () => {
                 {isLogin && (
                   <Menu as="div" className="relative ml-3">
                     <div>
-                      <Menu.Button className="flex rounded-full text-sm hover:opacity-50 ">
+                      <Menu.Button className="flex rounded-full text-sm hover:opacity-50">
                         <span className="sr-only">Open user menu</span>
                         <svg
                           className="w-8 h-8 text-gray-400 -left-1"
@@ -80,9 +105,9 @@ const UserHeader = () => {
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            fill-rule="evenodd"
+                            fillRule="evenodd"
                             d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                            clip-rule="evenodd"
+                            clipRule="evenodd"
                           ></path>
                         </svg>
                       </Menu.Button>
@@ -122,7 +147,7 @@ const UserHeader = () => {
           {/* Navigation của trang web trên điện thoại. Khi lớn hơn kích thước điện thoại thì nó sẽ không xuất hiện. */}
           <Disclosure.Panel className="lg:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
+              {navigationWithChat.map((item) => (
                 <Disclosure.Button
                   key={item.name}
                   as="a"

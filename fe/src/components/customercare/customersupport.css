@@ -1,0 +1,123 @@
+/* Cấu hình chung cho phần hỗ trợ khách hàng */
+.customer-support {
+  text-align: center;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+.customer-support h2 {
+  font-size: 1.8em;
+  margin-bottom: 10px;
+  color: #007bff; /* Màu xanh cho tiêu đề */
+}
+
+.customer-support .contact-info {
+  margin-top: 20px;
+}
+
+/* Nút chat */
+.customer-support .chat-button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.customer-support .chat-button:hover {
+  background-color: #0056b3; /* Hiệu ứng hover */
+}
+
+/* Phần chat box */
+.chat-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 350px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+/* Header của chat box */
+.chat-header {
+  background-color: #007bff;
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px 10px 0 0;
+  font-weight: bold;
+}
+
+.chat-header .close-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+/* Nội dung chat box */
+.chat-body {
+  padding: 15px;
+  flex: 1;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}
+
+/* Footer của chat box */
+.chat-footer {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background-color: #fff;
+}
+
+/* Input chat */
+.chat-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1em;
+  outline: none;
+}
+
+.chat-input:focus {
+  border-color: #007bff; /* Viền khi focus */
+}
+
+/* Nút gửi tin nhắn */
+.send-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.send-button:hover {
+  background-color: #0056b3; /* Hiệu ứng hover */
+}
+
+/* Tin nhắn trong chat */
+.chat-message {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #e9ecef;
+  border-radius: 8px;
+}

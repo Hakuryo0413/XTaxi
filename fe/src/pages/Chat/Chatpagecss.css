@@ -1,0 +1,88 @@
+.chat-page-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #000; /* Nền đen */
+  color: #fff; /* Màu chữ trắng */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.chat-header {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.messages {
+  border: 1px solid #444; /* Viền khung tin nhắn */
+  padding: 10px;
+  height: 300px;
+  overflow-y: scroll;
+  background-color: #222; /* Nền khung tin nhắn */
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.message {
+  margin: 10px 0;
+  padding: 8px;
+  border-radius: 5px;
+  color: #fff; /* Màu chữ của tin nhắn */
+}
+
+.sent {
+  background-color: #1e88e5; /* Màu xanh cho tin nhắn gửi */
+  color: #fff; /* Chữ trắng để nổi bật */
+  text-align: right;
+}
+
+.received {
+  background-color: #e6ac00; /* Màu xanh lá cho tin nhắn nhận */
+  color: #fff; /* Chữ trắng để nổi bật */
+}
+
+.message-input {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message-input textarea {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #222; /* Nền textarea */
+  color: #fff; /* Màu chữ trắng để dễ nhìn */
+  transition: background-color 0.3s, color 0.3s; /* Thêm hiệu ứng chuyển màu */
+}
+
+.message-input textarea::placeholder {
+  color: #aaa; /* Màu placeholder để phân biệt */
+  opacity: 1;  /* Đảm bảo không bị mờ */
+}
+
+.message-input textarea:focus {
+  background-color: #333; /* Nền sáng hơn khi focus */
+  color: #ede1e1; /* Giữ màu chữ trắng khi focus */
+  outline: none; /* Loại bỏ viền mặc định */
+}
+
+.message-input textarea:hover {
+  background-color: #444; /* Màu nền sáng hơn khi hover */
+  color: #f7f4f4; /* Giữ màu chữ trắng khi hover */
+}
+
+.message-input button {
+  background-color: #ffc107; /* Màu vàng */
+  color: #f3ebeb; /* Màu chữ đen */
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.message-input button:hover {
+  background-color: #e6ac00; /* Màu vàng đậm khi hover */
+}
