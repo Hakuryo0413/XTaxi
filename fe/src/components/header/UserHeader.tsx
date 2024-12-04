@@ -16,7 +16,7 @@ const navigationGuest = [
 const navigation = [
   { name: "Book", href: "/booking", current: false },
   { name: "About", href: "/about", current: false },
-  //{ name: "Driver", href: "/LocationDriver", current: false },
+  { name: "Driver", href: "/LocationDriver", current: false },
   { name: "Profile", href: "/Profile", current: false },
 ];
 function classNames(...classes: string[]) {
